@@ -28,8 +28,10 @@ CI（lint / test / build）と CD は分離してよい。CD は上記ブラン�
 
 ### 前提
 
-- `@b4moss` scope の npm トークン等を CD シークレットとして保持する
+- `@b4moss` scope の npm トークン等を CD シークレット（`NPM_TOKEN`）として保持する
 - publish 前に pack／ビルドが成功していること
+- 実装: [`.github/workflows/npm-publish.yml`](../../../.github/workflows/npm-publish.yml)
+- 手順: [docs/npm-publish.md](../../npm-publish.md)
 
 ## Netlify リリース（`preview-site`）
 
@@ -74,4 +76,4 @@ CI（lint / test / build）と CD は分離してよい。CD は上記ブラン�
 
 - [publishing.md](./publishing.md)
 - [roadmap.md](./roadmap.md)
-- 実装手順（オーナー向け）: [docs/netlify.md](../../netlify.md)
+- 実装手順（オーナー向け）: [docs/netlify.md](../../netlify.md)、[docs/npm-publish.md](../../npm-publish.md)

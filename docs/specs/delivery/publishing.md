@@ -26,7 +26,7 @@
 2. そのコミットを `release` ブランチへマージする
 3. CD が `@b4moss/hermit-crumb@0.1.0` を npmjs.org に publish する
 
-手動 `npm publish` は緊急時の退避とし、通常経路は CD とする。
+手動 `npm publish` は緊急時の退避とし、通常経路は CD とする。手順は [docs/npm-publish.md](../../npm-publish.md)。
 
 ## Netlify preview
 

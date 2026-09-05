@@ -1,0 +1,80 @@
+# Publishes @b4moss/hermit-crumb when a tagged commit lands on `release`.
+# Spec: docs/specs/delivery/cd.md (decision 19)
+
+name: npm publish
+
+on:
+  push:
+    branches:
+      - release
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    name: publish @b4moss/hermit-crumb
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve version tag on this commit
+        id: tag
+        run: |
+          set -euo pipefail
+          TAGS="$(git tag --points-at "$GITHUB_SHA" 'v*' || true)"
+          if [ -z "$TAGS" ]; then
+            echo "No v* tag points at $GITHUB_SHA — skip publish (tag + release merge required)."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # Prefer the highest semver-looking tag if multiple
+          TAG="$(printf '%s\n' $TAGS | sort -V | tail -n1)"
+          VERSION="${TAG#v}"
+          PKG_VERSION="$(node -p "require('./packages/hermit-crumb/package.json').version")"
+          if [ "$VERSION" != "$PKG_VERSION" ]; then
+            echo "Tag version ($VERSION) != package.json version ($PKG_VERSION)"
+            exit 1
+          fi
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+          echo "Publishing $TAG (package $PKG_VERSION)"
+
+      - name: Setup Node.js
+        if: steps.tag.outputs.skip != 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.19"
+          cache: npm
+          registry-url: https://registry.npmjs.org
+
+      - name: Install dependencies
+        if: steps.tag.outputs.skip != 'true'
+        run: npm ci
+
+      - name: Build package
+        if: steps.tag.outputs.skip != 'true'
+        run: npm run build -w @b4moss/hermit-crumb
+
+      - name: Guard against re-publish
+        if: steps.tag.outputs.skip != 'true'
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.tag.outputs.version }}"
+          if npm view "@b4moss/hermit-crumb@$VERSION" version >/dev/null 2>&1; then
+            echo "@b4moss/hermit-crumb@$VERSION already exists on npm — refusing re-publish."
+            exit 1
+          fi
+          echo "Version $VERSION is not on npm yet — ok to publish."
+
+      - name: Publish
+        if: steps.tag.outputs.skip != 'true'
+        run: npm publish -w @b4moss/hermit-crumb --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
