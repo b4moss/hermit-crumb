@@ -14,8 +14,10 @@
 | [contracts/site-meta.md](./contracts/site-meta.md) | `site.meta.yaml` 契約 |
 | [contracts/versioning.md](./contracts/versioning.md) | 依存バージョンと semver |
 | [delivery/publishing.md](./delivery/publishing.md) | npmjs 公開と Netlify preview |
+| [delivery/cd.md](./delivery/cd.md) | CD（`release`→npm、`preview-site`→Netlify） |
 | [delivery/migration.md](./delivery/migration.md) | `doc-site` からの移植と移行ガイド |
-| [decisions.md](./decisions.md) | 決定事項ログ（1–18） |
+| [delivery/roadmap.md](./delivery/roadmap.md) | v0.1.0 までのフェーズ・タスク・エージェント／Multi task 方針 |
+| [decisions.md](./decisions.md) | 決定事項ログ（1–20） |
 
 ## 用語
 

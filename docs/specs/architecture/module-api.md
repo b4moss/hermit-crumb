@@ -39,3 +39,8 @@
 
 - 決定 2, 7, 8, 13 — [decisions.md](../decisions.md)
 - サイトメタ詳細: [../contracts/site-meta.md](../contracts/site-meta.md)
+
+## 実装順
+
+- Phase 2（1 エージェント上限感）。完了前に Phase 3 と並行しない
+- 詳細: [../delivery/roadmap.md](../delivery/roadmap.md)

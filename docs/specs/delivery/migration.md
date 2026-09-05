@@ -47,3 +47,8 @@
 ## 関連決定
 
 - 決定 4, 5, 12, 14, 15, 16, 17 — [decisions.md](../decisions.md)
+
+## 実装順
+
+- 機能移植の本体は Phase 1、境界の module 化は Phase 2、移行ガイド初版は Phase 5（Netlify と Multi task 可）
+- 詳細: [roadmap.md](./roadmap.md)

@@ -8,6 +8,7 @@ Nuxt v4 ベースのテックドキュメントサイト向けシェル。npm �
 
 - v0.1.0 を npmjs.org で公開する
 - 本リポジトリ内のデモサイトを Netlify で preview する
+- CD: `release`（新タグ付きコミットのマージ）→ npm、`preview-site`（マージ）→ Netlify
 
 ## 方針（要約）
 
@@ -23,5 +24,7 @@ Nuxt v4 ベースのテックドキュメントサイト向けシェル。npm �
 詳細は [`docs/specs/`](./docs/specs/README.md) を正とする。
 
 - [概要（v0.1.0 スコープ）](./docs/specs/overview.md)
+- [ロードマップ（〜 v0.1.0／エージェント・Multi task）](./docs/specs/delivery/roadmap.md)
+- [CD（release / preview-site）](./docs/specs/delivery/cd.md)
 - [テーマ（Pico + CSS 変数）](./docs/specs/architecture/theming.md)
 - [決定事項](./docs/specs/decisions.md)

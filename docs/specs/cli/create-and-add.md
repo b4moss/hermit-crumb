@@ -66,3 +66,9 @@ create 時に出さなかったコンポーネント等を、必要になった�
 ## 関連決定
 
 - 決定 1, 3, 6, 12, 15 — [decisions.md](../decisions.md)
+
+## 実装順
+
+- Phase 4。**`create` と `add` はエージェント実装を分割**する
+- CLI 骨格／`add` は Phase 3（Pico）と Multi task 可。create の UI／CSS テンプレは Pico 確定後
+- 詳細: [delivery/roadmap.md](../delivery/roadmap.md)

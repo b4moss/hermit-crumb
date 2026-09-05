@@ -22,3 +22,7 @@
 | 16 | スタイルベース | Pico.css をスタイルのベースとする | [architecture/theming.md](./architecture/theming.md) |
 | 17 | カラーテーマ | CSS 変数でサイトごとのカラー差し替えを容易にする | [architecture/theming.md](./architecture/theming.md) |
 | 18 | 初回公開 | 上記までの実現を **v0.1.0** とし npmjs.org に公開する | [delivery/publishing.md](./delivery/publishing.md), [overview.md](./overview.md) |
+| 19 | npm CD | **`release` ブランチ**に、**新しいタグが付いたコミット**がマージされたら npm リリース | [delivery/cd.md](./delivery/cd.md) |
+| 20 | Netlify CD | **`preview-site` ブランチ**にマージが入ったら Netlify リリース | [delivery/cd.md](./delivery/cd.md) |
+
+実装順・1 エージェント単位・Multi task 境界は [delivery/roadmap.md](./delivery/roadmap.md) を正とする。

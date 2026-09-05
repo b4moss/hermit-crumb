@@ -17,6 +17,7 @@
 1. **npm で配信**する（npmjs.com / npmjs.org の公開パッケージ）
 2. **preview サイトを Netlify で配信**する（本リポジトリ内のデモ／サンプルサイト）
 3. **スタイルベースに Pico.css** を採用し、**CSS 変数でサイトごとのカラーテーマ差し替え**を容易にする
+4. **CD** で npm／Netlify を自動リリースする（ブランチトリガーは [delivery/cd.md](./delivery/cd.md)）
 
 ## スコープ（v0.1.0）
 
@@ -29,6 +30,7 @@ v0.1.0 は、以下を満たした状態で初回 npm 公開する。
 - **Pico.css をスタイルのベース**として導入
 - **CSS 変数によるカラーテーマ差し替え**（サイトごと）
 - 本リポ内デモサイトと Netlify preview
+- **CD**: `release`（新タグ付きコミットのマージ）→ npm、`preview-site`（マージ）→ Netlify
 - `doc-site` 利用者向け移行ガイド（ブランチ廃止そのものはオーナー判断）
 
 ## 非スコープ（v0.1.0）
@@ -53,4 +55,6 @@ v0.1.0 は、以下を満たした状態で初回 npm 公開する。
 - 配信境界: [architecture/distribution.md](./architecture/distribution.md)
 - テーマ: [architecture/theming.md](./architecture/theming.md)
 - 公開: [delivery/publishing.md](./delivery/publishing.md)
+- CD: [delivery/cd.md](./delivery/cd.md)
+- ロードマップ（エージェント実装単位・Multi task 含む）: [delivery/roadmap.md](./delivery/roadmap.md)
 - 決定ログ: [decisions.md](./decisions.md)
