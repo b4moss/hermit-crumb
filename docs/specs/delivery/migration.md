@@ -21,6 +21,12 @@
 
 パッケージ境界への振り分けは [../architecture/distribution.md](../architecture/distribution.md) および [../cli/create-and-add.md](../cli/create-and-add.md) に従う。
 
+## `doc-site` からの差分（v0.1.0 で追加）
+
+- スタイルベースに **Pico.css** を導入する（`doc-site` 時点の独自 CSS 中心から移行）
+- カラーテーマは **CSS 変数**でサイトごとに差し替え可能にする
+- 詳細は [../architecture/theming.md](../architecture/theming.md)
+
 ## 移行ガイド
 
 - **作成主体**: hermit-crumb 側で **移行ガイドを先に用意**する
@@ -40,4 +46,4 @@
 
 ## 関連決定
 
-- 決定 4, 5, 12, 14, 15 — [decisions.md](../decisions.md)
+- 決定 4, 5, 12, 14, 15, 16, 17 — [decisions.md](../decisions.md)

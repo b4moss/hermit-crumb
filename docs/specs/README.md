@@ -9,13 +9,13 @@
 | [overview.md](./overview.md) | 目的・ゴール・スコープ・非スコープ |
 | [architecture/distribution.md](./architecture/distribution.md) | 配信モデルと所有境界（npm / create / add） |
 | [architecture/module-api.md](./architecture/module-api.md) | Nuxt module 公開 API |
-| [architecture/theming.md](./architecture/theming.md) | テーマ（CSS 変数契約） |
+| [architecture/theming.md](./architecture/theming.md) | テーマ（Pico.css + CSS 変数） |
 | [cli/create-and-add.md](./cli/create-and-add.md) | `create` / `add` の振る舞い |
 | [contracts/site-meta.md](./contracts/site-meta.md) | `site.meta.yaml` 契約 |
 | [contracts/versioning.md](./contracts/versioning.md) | 依存バージョンと semver |
 | [delivery/publishing.md](./delivery/publishing.md) | npmjs 公開と Netlify preview |
 | [delivery/migration.md](./delivery/migration.md) | `doc-site` からの移植と移行ガイド |
-| [decisions.md](./decisions.md) | 決定事項ログ（1–15） |
+| [decisions.md](./decisions.md) | 決定事項ログ（1–18） |
 
 ## 用語
 

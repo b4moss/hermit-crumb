@@ -5,6 +5,7 @@
 - **名称**: hermit-crumb
 - **npm パッケージ**: `@b4moss/hermit-crumb`
 - **位置づけ**: Nuxt v4 ベースのテックドキュメントサイト向けシェル
+- **初回公開バージョン**: **v0.1.0**（本仕様の実現をもって npmjs.org に公開）
 
 ## 目的
 
@@ -13,25 +14,30 @@
 
 ## ゴール
 
-1. **npm で配信**する（npmjs.com の公開パッケージ）
+1. **npm で配信**する（npmjs.com / npmjs.org の公開パッケージ）
 2. **preview サイトを Netlify で配信**する（本リポジトリ内のデモ／サンプルサイト）
+3. **スタイルベースに Pico.css** を採用し、**CSS 変数でサイトごとのカラーテーマ差し替え**を容易にする
 
-## スコープ（初期リリース）
+## スコープ（v0.1.0）
+
+v0.1.0 は、以下を満たした状態で初回 npm 公開する。
 
 - `b4moss/git-template:doc-site` の現行機能の一括移植
-- Nuxt module としての殻の提供
+- Nuxt module としての殻の提供（公開 API は module 経由のみ）
 - CLI: 新規プロジェクト向け `create`、コンポーネント向け `add`
 - `site.meta.yaml` スキーマと example の提供
-- CSS 変数によるテーマ契約
+- **Pico.css をスタイルのベース**として導入
+- **CSS 変数によるカラーテーマ差し替え**（サイトごと）
 - 本リポ内デモサイトと Netlify preview
 - `doc-site` 利用者向け移行ガイド（ブランチ廃止そのものはオーナー判断）
 
-## 非スコープ（初期）
+## 非スコープ（v0.1.0）
 
 - 既存 Nuxt アプリへの後付けインストール（`init` 等）— 後回し
 - Nuxt / Content / i18n 等の最新 major への継続追従 — 別判断
 - git テンプレート差分運用を主戦略とすること
 - 深いコンポーネント継承（`extends`）を推奨カスタム手段にすること
+- Pico 以外の CSS フレームワークの併用を前提にすること
 
 ## 移植元
 
@@ -40,8 +46,11 @@
 | リポジトリ | https://github.com/b4moss/git-template |
 | ブランチ | `doc-site` |
 | 現状スタック（固定方針） | Nuxt `^4.5.2`、`@nuxt/content` `^3.14.0`、`@nuxtjs/i18n` `^9.5.6`、`@nuxtjs/color-mode` `^4.0.1`、`@nuxt/scripts` `^1.3.0` など（`doc-site` の `package.json` に準拠） |
+| スタイルベース（追加） | Pico.css（v0.1.0 で導入。具体バージョンは実装時に固定） |
 
 ## 関連文書
 
 - 配信境界: [architecture/distribution.md](./architecture/distribution.md)
+- テーマ: [architecture/theming.md](./architecture/theming.md)
+- 公開: [delivery/publishing.md](./delivery/publishing.md)
 - 決定ログ: [decisions.md](./decisions.md)

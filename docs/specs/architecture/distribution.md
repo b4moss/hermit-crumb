@@ -10,7 +10,8 @@
 │  - Nuxt module                              │
 │  - composables / utils（ロジック）            │
 │  - site.meta スキーマ・example               │
-│  - CSS 変数のデフォルト定義                   │
+│  - Pico.css ベーススタイル                    │
+│  - CSS 変数のデフォルト定義（カラーテーマ）      │
 │  - create / add 用テンプレート               │
 └──────────────────┬──────────────────────────┘
                    │ create / add / npm update
@@ -20,6 +21,7 @@
 │  - 生成 UI（Header 等）                       │
 │  - content/（日英 Markdown）                  │
 │  - site.meta.yaml（値）                       │
+│  - カラー用 CSS 変数のサイト上書き              │
 │  - docsNav 等のサイト固有設定                 │
 └─────────────────────────────────────────────┘
 ```
@@ -31,8 +33,9 @@
 | 種別 | 例 | 利用側の扱い |
 | --- | --- | --- |
 | Nuxt module | 自動登録・設定取り込み | `nuxt.config` で modules に追加（create が配線） |
+| スタイルベース | Pico.css | module 経由で適用。直接の差し替えは非推奨 |
 | 純ロジック | ナビ計算、JSON-LD、FAQ 抽出 | 直接 import せず module 経由で使う |
-| 契約 | `site.meta.yaml` スキーマ、CSS 変数名 | 値／上書きのみ |
+| 契約 | `site.meta.yaml` スキーマ、カラー用 CSS 変数名 | 値／上書きのみ |
 | CLI テンプレ | create / add の雛形 | 生成後は利用側所有 |
 
 ### create 時に利用側へ生成（デフォルト）
@@ -78,4 +81,4 @@
 
 ## 関連決定
 
-- 決定 1, 2, 3, 11, 12, 15 — [decisions.md](../decisions.md)
+- 決定 1, 2, 3, 11, 12, 15, 16, 17 — [decisions.md](../decisions.md)

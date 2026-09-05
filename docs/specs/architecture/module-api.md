@@ -8,7 +8,7 @@
 
 1. 依存モジュールの配線（Content / i18n / color-mode / scripts 等。`doc-site` 準拠）
 2. `site.meta.yaml`（なければ example）の読み込みと `runtimeConfig.public` への正規化載せ
-3. 共通 CSS（変数デフォルト含む）の適用
+3. Pico.css および共通 CSS（カラー用変数デフォルト含む）の適用
 4. ロジック層（ナビ、JSON-LD、FAQ 抽出等）の利用可能化（auto-import または module が公開する安定面のみ）
 5. 必要ならランタイム／ビルド時ヘルパの登録
 
@@ -18,7 +18,8 @@
 | --- | --- | --- |
 | module オプションキー | `nuxt.config` 上の設定形状 | major |
 | `runtimeConfig.public` の公開フィールド | `site.meta.yaml` 由来のサイトメタ | major（スキーマ変更に準ずる） |
-| CSS 変数名 | テーマの主契約 | major（削除・意味変更） |
+| CSS 変数名 | カラーテーマ等の主契約 | major（削除・意味変更） |
+| Pico.css の取り込み方 | ベーススタイルとして module が提供 | major（除去や非互換メジャー） |
 | 生成テンプレの必須構造 | create / add が前提とするファイル役割 | major |
 
 内部実装のリネームやファイル移動は、上記契約を保てば minor / patch としうる。

@@ -19,3 +19,6 @@
 | 13 | テーマ | CSS 変数を主契約（利用側は変数上書きが基本） | [architecture/theming.md](./architecture/theming.md) |
 | 14 | `doc-site` 廃止 | タイミングはオーナー判断。移行ガイドは先に用意 | [delivery/migration.md](./delivery/migration.md) |
 | 15 | 代表ページ | `doc-site` 現行 content 一式（日英） | [cli/create-and-add.md](./cli/create-and-add.md) |
+| 16 | スタイルベース | Pico.css をスタイルのベースとする | [architecture/theming.md](./architecture/theming.md) |
+| 17 | カラーテーマ | CSS 変数でサイトごとのカラー差し替えを容易にする | [architecture/theming.md](./architecture/theming.md) |
+| 18 | 初回公開 | 上記までの実現を **v0.1.0** とし npmjs.org に公開する | [delivery/publishing.md](./delivery/publishing.md), [overview.md](./overview.md) |
