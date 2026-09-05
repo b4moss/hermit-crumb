@@ -1,13 +1,6 @@
 <script setup lang="ts">
 import { withLeadingSlash } from "ufo";
 import type { Collections } from "@nuxt/content";
-import type { SchemaRole } from "~/composables/useJsonLd";
-import { extractFaqFromBody, type FaqQa } from "~/utils/extractFaq";
-import {
-  includesEntityType,
-  type PageJsonLdInput,
-} from "~/utils/jsonLdEntities";
-
 const route = useRoute();
 const { locale } = useI18n();
 const config = useRuntimeConfig();

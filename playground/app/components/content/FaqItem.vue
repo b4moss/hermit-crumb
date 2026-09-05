@@ -1,9 +1,4 @@
 <script setup lang="ts">
-import {
-  faqListInjectionKey,
-  type FaqListContext,
-} from "~/utils/faqListContext";
-
 defineProps<{
   question: string;
 }>();

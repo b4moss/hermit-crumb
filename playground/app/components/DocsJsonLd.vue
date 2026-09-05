@@ -1,9 +1,5 @@
 <script lang="ts">
 import { defineComponent, toRef, type PropType } from "vue";
-import type { SchemaRole } from "~/composables/useJsonLd";
-import type { PageJsonLdInput } from "~/utils/jsonLdEntities";
-import type { FaqQa } from "~/utils/extractFaq";
-
 /**
  * Head-only helper: JSON-LD is injected via useHead.
  * Must render `null` (not an empty / comment-only template) so SSR and client

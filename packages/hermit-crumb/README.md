@@ -1,17 +1,28 @@
 # `@b4moss/hermit-crumb`
 
-Nuxt v4 向けテックドキュメントサイトの殻（module / 将来の CLI）。
+Nuxt v4 向けテックドキュメントサイトの殻（Nuxt module）。初回公開は **v0.1.0**。
 
-初回公開は **v0.1.0**。実装詳細とスコープはリポジトリの [`docs/specs/`](../../docs/specs/README.md) を正とする。
+## 使い方
+
+```ts
+// nuxt.config.ts
+export default defineNuxtConfig({
+  modules: ["@b4moss/hermit-crumb"],
+  // Content / i18n / color-mode / scripts の詳細オプションは従来どおりここに書く
+})
+```
+
+公開 API は **module 経由のみ**（composables / utils は auto-import）。詳細はリポジトリの [`docs/specs`](../../docs/specs/README.md)。
 
 ## 開発（モノレポ）
 
 ```shell
-# リポジトリルートで
 npm install
 npm run build -w @b4moss/hermit-crumb
+npm run generate:playground
 ```
 
 ## ステータス
 
-Phase 0: パッケージ骨格のみ。module 本実装は Phase 2、CLI は Phase 4。
+- Phase 2: module 配線・`site.meta.yaml`・ロジック runtime
+- Pico.css は Phase 3、CLI は Phase 4

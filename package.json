@@ -13,7 +13,8 @@
     "build": "npm run build -w @b4moss/hermit-crumb",
     "dev:playground": "npm run dev -w hermit-crumb-playground",
     "generate:playground": "npm run generate -w hermit-crumb-playground",
-    "typecheck:playground": "npm run typecheck -w hermit-crumb-playground"
+    "typecheck:playground": "npm run typecheck -w hermit-crumb-playground",
+    "postinstall": "npm run build -w @b4moss/hermit-crumb"
   },
   "engines": {
     "node": ">=22.19.0"

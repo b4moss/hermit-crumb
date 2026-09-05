@@ -1,5 +1,5 @@
-import type { FaqQa } from "~/utils/extractFaq";
-import type { SiteSoftwareMeta } from "~/utils/siteMeta";
+import type { FaqQa } from "../utils/extractFaq";
+import type { SiteSoftwareMeta } from "../utils/siteMeta";
 import {
   buildJsonLdEntity,
   buildOrganization,
@@ -8,7 +8,7 @@ import {
   sanitizeExtraEntities,
   type JsonLdObject,
   type PageJsonLdInput,
-} from "~/utils/jsonLdEntities";
+} from "../utils/jsonLdEntities";
 
 export type SchemaRole = "TechArticle" | "HowTo" | "FAQPage";
 

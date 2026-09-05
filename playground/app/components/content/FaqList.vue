@@ -1,9 +1,4 @@
 <script setup lang="ts">
-import {
-  faqListInjectionKey,
-  type FaqListContext,
-} from "~/utils/faqListContext";
-
 const { t } = useI18n();
 const panelIds = ref<string[]>([]);
 const openIds = ref<Set<string>>(new Set());

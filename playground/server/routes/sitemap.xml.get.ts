@@ -1,5 +1,3 @@
-import { buildSitemapXml } from "~/utils/buildSitemap";
-
 export default defineEventHandler((event) => {
   const { siteUrl } = useRuntimeConfig().public;
   const xml = buildSitemapXml(String(siteUrl || "https://example.com"));

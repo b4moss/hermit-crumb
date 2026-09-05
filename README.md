@@ -37,7 +37,7 @@ npm run build
 npm run generate:playground
 ```
 
-Node.js **>= 22.19**（Nuxt `^4.5.2` の engines に合わせる）。
+`npm install` の `postinstall` で `@b4moss/hermit-crumb` をビルドする。Node.js **>= 22.19**（Nuxt `^4.5.2` の engines に合わせる）。
 
 ## 仕様書
 

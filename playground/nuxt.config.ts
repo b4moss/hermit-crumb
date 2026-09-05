@@ -1,55 +1,15 @@
-import { copyFileSync, existsSync, readFileSync } from "node:fs";
+import { copyFileSync } from "node:fs";
 import { join } from "node:path";
-import { parse as parseYaml } from "yaml";
-import { normalizeSiteMeta, type SiteMeta } from "./app/utils/siteMeta";
-
-function loadSiteMeta(rootDir: string): SiteMeta {
-  const candidates = [
-    join(rootDir, "site.meta.yaml"),
-    join(rootDir, "site.meta.yaml.example"),
-  ];
-  for (const path of candidates) {
-    if (!existsSync(path)) continue;
-    try {
-      const raw = parseYaml(readFileSync(path, "utf8")) as Record<
-        string,
-        unknown
-      > | null;
-      return normalizeSiteMeta(raw || undefined);
-    } catch (error) {
-      console.warn(`[doc-site] Failed to parse ${path}:`, error);
-    }
-  }
-  return normalizeSiteMeta(undefined);
-}
-
-const siteMeta = loadSiteMeta(process.cwd());
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: [
-    "@nuxt/content",
-    "@nuxtjs/i18n",
-    "@nuxtjs/color-mode",
-    "@nuxt/scripts",
-  ],
+  modules: ["@b4moss/hermit-crumb"],
+  hermitCrumb: {
+    installDeps: true,
+  },
   devtools: { enabled: true },
   compatibilityDate: "2024-04-03",
   css: ["~/assets/css/main.css"],
-  runtimeConfig: {
-    public: {
-      siteName: siteMeta.siteName,
-      siteUrl: siteMeta.siteUrl,
-      siteVersion: siteMeta.siteVersion,
-      description: siteMeta.description,
-      githubUrl: siteMeta.githubUrl,
-      npmUrl: siteMeta.npmUrl,
-      footerText: siteMeta.footerText,
-      software: siteMeta.software,
-      organization: siteMeta.organization,
-      jsonLdExtra: siteMeta.jsonLdExtra,
-    },
-  },
   // GTM: set NUXT_PUBLIC_SCRIPTS_GOOGLE_TAG_MANAGER_ID=GTM-XXXXXXX (build-time for SSG).
   // Empty / unset → tagging stays disabled (see plugins/google-tag-manager.client.ts).
   scripts: {
@@ -88,8 +48,7 @@ export default defineNuxtConfig({
     },
   },
   i18n: {
-    // Absolute URLs for canonical / hreflang come from site.meta.yaml.
-    baseUrl: siteMeta.siteUrl,
+    // baseUrl defaults from site.meta.yaml via @b4moss/hermit-crumb when unset.
     locales: [
       { code: "ja", name: "日本語", language: "ja-JP", file: "ja.ts" },
       { code: "en", name: "English", language: "en-US", file: "en.ts" },
