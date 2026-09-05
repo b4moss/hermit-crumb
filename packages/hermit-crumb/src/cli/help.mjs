@@ -4,9 +4,12 @@ export const HELP_TEXT = `hermit-crumb — @b4moss/hermit-crumb CLI
   hermit-crumb <command> [options]
 
 コマンド:
+  create <dir>   新規ドキュメントサイトを生成する
   add <name>     コンポーネントテンプレートを利用側へ追加
-  create         新規プロジェクト生成（Phase 4B で実装予定）
   help           このヘルプを表示
+
+create オプション:
+  --force        既存ディレクトリ／ファイルを上書きする
 
 add オプション:
   --force        既存ファイルを上書きする（省略時はスキップ）
@@ -14,6 +17,7 @@ add オプション:
   --cwd <dir>    対象プロジェクトのルート（既定: カレント）
 
 例:
+  npx @b4moss/hermit-crumb create my-docs
   npx @b4moss/hermit-crumb add DocsPager
   npx @b4moss/hermit-crumb add DocsPager --force
   npx @b4moss/hermit-crumb add --list

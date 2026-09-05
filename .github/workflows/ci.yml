@@ -15,7 +15,7 @@ on:
 
 jobs:
   check:
-    name: lint / typecheck / build / test / generate
+    name: lint / typecheck / build / test / smoke / generate
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -42,6 +42,9 @@ jobs:
 
       - name: Test package
         run: npm run test
+
+      - name: Smoke create (file: link + nuxt prepare)
+        run: npm run smoke:create
 
       - name: Generate playground
         run: npm run generate:playground

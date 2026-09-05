@@ -55,7 +55,8 @@
     "build": "nuxt-module-build build",
     "typecheck": "nuxt-module-build build",
     "lint": "node ./scripts/lint.mjs",
-    "test": "node --test test/**/*.test.mjs"
+    "test": "node --test test/**/*.test.mjs",
+    "smoke:create": "node ./scripts/smoke-create.mjs"
   },
   "dependencies": {
     "@nuxt/kit": "^4.5.2",

@@ -2,6 +2,7 @@
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { addComponent, assertNuxtApp, listTemplates } from "../src/cli/add.mjs";
+import { createProject } from "../src/cli/create.mjs";
 import { HELP_TEXT } from "../src/cli/help.mjs";
 import { parseArgs } from "../src/cli/parse-args.mjs";
 
@@ -26,10 +27,43 @@ export async function run(argv) {
   }
 
   if (command === "create") {
-    console.error(
-      "create は未実装です。Phase 4B で実装予定です。\n詳細: docs/specs/cli/create-and-add.md",
-    );
-    return 1;
+    const dir = rest[0];
+    if (!dir) {
+      console.error("使い方: hermit-crumb create <dir> [--force]");
+      return 1;
+    }
+
+    const targetDir = resolve(args.cwd, dir);
+    try {
+      const result = await createProject({
+        targetDir,
+        force: args.force,
+      });
+      const { summary } = result;
+      console.log(`create ${result.targetDir}`);
+      console.log(`package name: ${result.packageName}`);
+      console.log(
+        `files: created=${summary.created.length} overwritten=${summary.overwritten.length} skipped=${summary.skipped.length}`,
+      );
+      if (summary.skipped.length && !args.force) {
+        console.log(
+          "（既存ファイルはスキップしました。上書きは --force）",
+        );
+      }
+      console.log(`
+次のステップ:
+  cd ${dir}
+  cp site.meta.yaml.example site.meta.yaml   # 任意
+  npm install
+  npm run dev
+
+生成ファイルは利用側所有です。パッケージ更新では自動上書きしません。
+`);
+      return 0;
+    } catch (err) {
+      console.error(err instanceof Error ? err.message : err);
+      return 1;
+    }
   }
 
   if (command === "add") {

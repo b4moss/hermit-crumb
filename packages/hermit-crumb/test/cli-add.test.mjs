@@ -131,8 +131,8 @@ describe("CLI run()", () => {
     assert.equal(code, 0);
   });
 
-  it("stubs create with exit 1", async () => {
-    const code = await run(["create", "my-site"]);
+  it("requires a directory argument for create", async () => {
+    const code = await run(["create"]);
     assert.equal(code, 1);
   });
 

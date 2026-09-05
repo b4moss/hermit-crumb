@@ -20,11 +20,12 @@ export default defineNuxtConfig({
 
 ```shell
 npx @b4moss/hermit-crumb --help
+npx @b4moss/hermit-crumb create my-docs
 npx @b4moss/hermit-crumb add --list
 npx @b4moss/hermit-crumb add DocsPager
 ```
 
-`add` で生成した UI は **利用側所有**です。既存ファイルは上書きしません（`--force` のみ）。`create` は Phase 4B で実装予定です。
+`create` / `add` で生成した UI は **利用側所有**です。既存ファイルは上書きしません（`--force` のみ）。
 
 詳細はリポジトリの [`docs/specs`](../../docs/specs/README.md)。
 
@@ -42,3 +43,4 @@ npm run generate:playground
 - Phase 2: module 配線・`site.meta.yaml`・ロジック runtime
 - Phase 3: Pico.css + カラー変数
 - Phase 4A: CLI 骨格・`add`（非上書き / `--force`）
+- Phase 4B: CLI `create`（シェル・日英 content・デフォルト UI）
