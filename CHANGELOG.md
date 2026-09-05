@@ -12,8 +12,8 @@ All notable changes to `@b4moss/hermit-crumb` are documented in this file.
 - CLI `hermit-crumb create` — シェル・日英 content・デフォルト UI 一式
 - CLI `hermit-crumb add` — コンポーネント追加（既存はスキップ、`--force` のみ上書き）
 - モノレポ `playground` — create 相当のデモ（Netlify `preview-site` 対象）
-- 移行ガイド（`docs/migration.md`）
-- CD: `preview-site` → Netlify、`release` + `v*` タグ → npm
+- Migration guide (`docs/migration.md`)
+- CD: `preview-site` → Netlify; `release` + `v*` tag → npm
 
 ### Notes
 

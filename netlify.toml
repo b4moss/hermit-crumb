@@ -1,5 +1,5 @@
 # Netlify builds the monorepo playground (create-equivalent demo).
-# Production branch must be `preview-site` (see docs/specs/delivery/cd.md).
+# Production branch must be `preview-site` (see docs/publishing.md).
 
 [build]
   command = "npm ci && npm run generate:playground"

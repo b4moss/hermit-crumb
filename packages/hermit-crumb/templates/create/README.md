@@ -29,4 +29,4 @@ npm run generate
 
 ## カラーの上書き
 
-`:root` / `[data-theme]` で CSS 変数を上書きすればサイトカラーを変えられます（コンポーネント編集は不要）。例はパッケージ／playground の theming 仕様を参照してください。
+`:root` / `[data-theme]` で CSS 変数を上書きすればサイトカラーを変えられます（コンポーネント編集は不要）。詳細はリポジトリの `docs/theming.md` を参照してください。
