@@ -28,17 +28,6 @@ const themeOptions = computed(() => [
   { value: "dark", label: t("theme.dark") },
 ]);
 
-const currentLanguage = computed(() => {
-  const current = languageOptions.value.find((item) => item.code === locale.value);
-  return current?.name ?? locale.value;
-});
-
-const currentTheme = computed(
-  () =>
-    themeOptions.value.find((item) => item.value === colorMode.preference) ??
-    themeOptions.value[0],
-);
-
 async function chooseLanguage(code: string, closeOuter: () => void) {
   if (code !== locale.value) {
     await setLocale(code);
@@ -70,63 +59,41 @@ function chooseTheme(value: string, closeOuter: () => void) {
     </template>
 
     <template #default="{ close }">
-      <div class="prefs-stack">
+      <div class="prefs-menu">
         <div class="section" role="group" :aria-label="t('nav.language')">
           <p class="section-label">{{ t("nav.language") }}</p>
-          <HeaderDropdown
-            nested
-            :label="t('nav.language')"
-            :trigger-text="currentLanguage"
-          >
-            <template #default="{ close: closeLang }">
-              <button
-                v-for="item in languageOptions"
-                :key="item.code"
-                type="button"
-                class="option"
-                role="option"
-                :aria-selected="item.code === locale"
-                :data-active="item.code === locale ? 'true' : 'false'"
-                @click="
-                  chooseLanguage(item.code, () => {
-                    closeLang();
-                    close();
-                  })
-                "
-              >
-                {{ item.name }}
-              </button>
-            </template>
-          </HeaderDropdown>
+          <div class="option-list">
+            <button
+              v-for="item in languageOptions"
+              :key="item.code"
+              type="button"
+              class="option"
+              role="option"
+              :aria-selected="item.code === locale"
+              :data-active="item.code === locale ? 'true' : 'false'"
+              @click="chooseLanguage(item.code, close)"
+            >
+              {{ item.name }}
+            </button>
+          </div>
         </div>
 
         <div class="section" role="group" :aria-label="t('theme.label')">
           <p class="section-label">{{ t("theme.label") }}</p>
-          <HeaderDropdown
-            nested
-            :label="t('theme.label')"
-            :trigger-text="currentTheme.label"
-          >
-            <template #default="{ close: closeTheme }">
-              <button
-                v-for="item in themeOptions"
-                :key="item.value"
-                type="button"
-                class="option"
-                role="option"
-                :aria-selected="item.value === colorMode.preference"
-                :data-active="item.value === colorMode.preference ? 'true' : 'false'"
-                @click="
-                  chooseTheme(item.value, () => {
-                    closeTheme();
-                    close();
-                  })
-                "
-              >
-                {{ item.label }}
-              </button>
-            </template>
-          </HeaderDropdown>
+          <div class="option-list">
+            <button
+              v-for="item in themeOptions"
+              :key="item.value"
+              type="button"
+              class="option"
+              role="option"
+              :aria-selected="item.value === colorMode.preference"
+              :data-active="item.value === colorMode.preference ? 'true' : 'false'"
+              @click="chooseTheme(item.value, close)"
+            >
+              {{ item.label }}
+            </button>
+          </div>
         </div>
       </div>
     </template>
@@ -138,26 +105,43 @@ function chooseTheme(value: string, closeOuter: () => void) {
   display: block;
 }
 
-.prefs-stack {
+.prefs-menu {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
-  min-width: 12rem;
+  gap: 0.55rem;
+  min-width: 11.5rem;
+  width: max-content;
+  max-width: min(18rem, calc(100vw - 2rem));
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
 }
 
 .section + .section {
-  padding-top: 0.35rem;
+  padding-top: 0.55rem;
   border-top: 1px solid var(--color-border);
 }
 
 .section-label {
   margin: 0;
-  padding: 0.25rem 0.35rem 0.2rem;
+  padding: 0.15rem 0.65rem 0.1rem;
   color: var(--color-muted);
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.04em;
+  line-height: 1.3;
   text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.option-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
 }
 
 .option {
@@ -172,7 +156,9 @@ function chooseTheme(value: string, closeOuter: () => void) {
   color: var(--color-ink);
   font: inherit;
   font-size: 0.875rem;
+  line-height: 1.3;
   text-align: left;
+  white-space: nowrap;
   cursor: pointer;
 }
 
@@ -186,6 +172,10 @@ function chooseTheme(value: string, closeOuter: () => void) {
 }
 
 @media (max-width: 640px) {
+  .prefs-menu {
+    min-width: 12.5rem;
+  }
+
   .option {
     min-height: 2.4rem;
     font-size: 0.95rem;

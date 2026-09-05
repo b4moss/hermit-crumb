@@ -6,14 +6,11 @@ withDefaults(
     compactText?: string;
     /** Icon-only trigger (e.g. gear). Uses #trigger slot when provided. */
     iconOnly?: boolean;
-    /** Nested dropdowns sit inside another menu; tighten layout. */
-    nested?: boolean;
   }>(),
   {
     triggerText: "",
     compactText: "",
     iconOnly: false,
-    nested: false,
   },
 );
 
@@ -79,7 +76,7 @@ defineExpose({ close, open });
   <div
     ref="root"
     class="dropdown"
-    :class="{ 'dropdown--nested': nested, 'dropdown--icon': iconOnly }"
+    :class="{ 'dropdown--icon': iconOnly }"
     :data-open="open ? 'true' : 'false'"
   >
     <button
@@ -133,6 +130,7 @@ defineExpose({ close, open });
   font: inherit;
   font-size: 0.875rem;
   line-height: 1.2;
+  white-space: nowrap;
   cursor: pointer;
 }
 
@@ -145,28 +143,6 @@ defineExpose({ close, open });
 
 .dropdown--icon .dropdown-trigger:hover {
   color: var(--color-ink);
-}
-
-.dropdown--nested {
-  width: 100%;
-}
-
-.dropdown--nested .dropdown-trigger {
-  width: 100%;
-  justify-content: space-between;
-  min-height: 2.1rem;
-  font-size: 0.875rem;
-}
-
-.dropdown--nested .dropdown-menu {
-  position: static;
-  top: auto;
-  right: auto;
-  margin-top: 0.25rem;
-  min-width: 0;
-  width: 100%;
-  box-shadow: none;
-  background: color-mix(in srgb, var(--color-bg) 55%, var(--color-surface));
 }
 
 .dropdown-trigger:hover {
@@ -200,7 +176,9 @@ defineExpose({ close, open });
   top: calc(100% + 0.35rem);
   right: 0;
   z-index: 40;
-  min-width: max(100%, 11rem);
+  min-width: max(100%, 11.5rem);
+  width: max-content;
+  max-width: min(18rem, calc(100vw - 2rem));
   padding: 0.3rem;
   border: 1px solid var(--color-border);
   border-radius: 0.45rem;
@@ -209,17 +187,17 @@ defineExpose({ close, open });
 }
 
 @media (max-width: 640px) {
-  .dropdown:not(.dropdown--icon):not(.dropdown--nested) .dropdown-trigger {
+  .dropdown:not(.dropdown--icon) .dropdown-trigger {
     min-width: 2.25rem;
     justify-content: center;
     padding: 0.35rem 0.45rem;
   }
 
-  .dropdown:not(.dropdown--icon):not(.dropdown--nested) .trigger-text--full {
+  .dropdown:not(.dropdown--icon) .trigger-text--full {
     display: none;
   }
 
-  .dropdown:not(.dropdown--icon):not(.dropdown--nested) .trigger-text--compact {
+  .dropdown:not(.dropdown--icon) .trigger-text--compact {
     display: inline;
     font-size: 0.8rem;
     font-weight: 600;
@@ -227,13 +205,8 @@ defineExpose({ close, open });
   }
 
   .dropdown-menu {
-    min-width: 11rem;
+    min-width: 12.5rem;
     padding: 0.4rem;
-  }
-
-  .dropdown--nested .dropdown-trigger {
-    min-height: 2.4rem;
-    font-size: 0.95rem;
   }
 }
 </style>
