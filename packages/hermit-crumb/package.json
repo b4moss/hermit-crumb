@@ -28,6 +28,9 @@
   "engines": {
     "node": ">=22.19.0"
   },
+  "bin": {
+    "hermit-crumb": "./bin/hermit-crumb.mjs"
+  },
   "exports": {
     ".": {
       "types": "./dist/types.d.mts",
@@ -43,13 +46,16 @@
     }
   },
   "files": [
+    "bin",
     "dist",
+    "templates",
     "site.meta.yaml.example"
   ],
   "scripts": {
     "build": "nuxt-module-build build",
     "typecheck": "nuxt-module-build build",
-    "lint": "node ./scripts/lint.mjs"
+    "lint": "node ./scripts/lint.mjs",
+    "test": "node --test test/**/*.test.mjs"
   },
   "dependencies": {
     "@nuxt/kit": "^4.5.2",
