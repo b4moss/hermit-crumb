@@ -42,5 +42,5 @@
 
 ## 実装順
 
-- Phase 2（1 エージェント上限感）。完了前に Phase 3 と並行しない
+- Phase 2 で module 骨格・`site.meta.yaml`・ロジック runtime を提供（Pico 適用は Phase 3）
 - 詳細: [../delivery/roadmap.md](../delivery/roadmap.md)

@@ -38,6 +38,14 @@ hermit-crumb デフォルトトークン（module が提供）
 
 目標は、**コンポーネントを触らずに色だけ差し替えられる**こと。
 
+### 実装メモ（v0.1.0 / Phase 3）
+
+| 項目 | 値 |
+| --- | --- |
+| Pico | `@picocss/pico@2.1.1`（module が CSS 注入） |
+| デフォルトトークン | `packages/hermit-crumb/src/runtime/styles/tokens.css` |
+| color-mode | `dataValue: 'theme'` → `data-theme="light\|dark"`（Pico 慣習） |
+| デモ上書き例 | `playground/app/assets/css/theme-override.css` |
 ## 利用側のカスタム手段（優先順）
 
 1. **CSS 変数の上書き**（推奨・主契約。とくにカラー）

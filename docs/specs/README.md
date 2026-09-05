@@ -1,6 +1,6 @@
 # hermit-crumb 仕様書
 
-本ディレクトリは、`@b4moss/hermit-crumb` の移行・実装・npm パッケージ化に関する仕様の正典です。概要のみ `README.md`、詳細はここに置きます。
+本ディレクトリは、`@b4moss/hermit-crumb` の移行・実装・npm パッケージ化に関する仕様の正典です。概要のみ `README.md`、詳細はここに置きます。実装や公開契約を変える差分では、コードとあわせて本ディレクトリも更新する。
 
 ## 文書一覧
 
@@ -14,8 +14,8 @@
 | [contracts/site-meta.md](./contracts/site-meta.md) | `site.meta.yaml` 契約 |
 | [contracts/versioning.md](./contracts/versioning.md) | 依存バージョンと semver |
 | [delivery/publishing.md](./delivery/publishing.md) | npmjs 公開と Netlify preview |
-| [delivery/cd.md](./delivery/cd.md) | CD（`release`→npm、`preview-site`→Netlify） |
-| [delivery/migration.md](./delivery/migration.md) | `doc-site` からの移植と移行ガイド |
+| [delivery/cd.md](./delivery/cd.md) | CD（`release`→npm、`preview-site`→Netlify）。手順は [docs/netlify.md](../netlify.md) / [docs/npm-publish.md](../npm-publish.md) |
+| [delivery/migration.md](./delivery/migration.md) | `doc-site` からの移植方針（実装ガイドは [docs/migration.md](../migration.md)） |
 | [delivery/roadmap.md](./delivery/roadmap.md) | v0.1.0 までのフェーズ・タスク・エージェント／Multi task 方針 |
 | [decisions.md](./decisions.md) | 決定事項ログ（1–20） |
 

@@ -1,0 +1,86 @@
+/**
+ * Default hermit-crumb color tokens on top of Pico.css.
+ *
+ * - Pico reads `data-theme="light|dark"` (wired via @nuxtjs/color-mode).
+ * - `--hc-*` / `--color-*` bridge existing shell components to the same palette.
+ * - Consumers override these variables to rebrand without touching components.
+ */
+
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* Brand primary (teal) → Pico */
+  --pico-font-family-sans-serif: "IBM Plex Sans", "Hiragino Sans", "Noto Sans JP",
+    system-ui, sans-serif, var(--pico-font-family-emoji);
+  --pico-font-family-monospace: "IBM Plex Mono", "SFMono-Regular", ui-monospace,
+    monospace, var(--pico-font-family-emoji);
+  --pico-font-family: var(--pico-font-family-sans-serif);
+
+  --pico-primary: #0f6e56;
+  --pico-primary-background: #0f6e56;
+  --pico-primary-border: var(--pico-primary-background);
+  --pico-primary-underline: rgba(15, 110, 86, 0.5);
+  --pico-primary-hover: #0a5441;
+  --pico-primary-hover-background: #0c5f4a;
+  --pico-primary-hover-border: var(--pico-primary-hover-background);
+  --pico-primary-hover-underline: var(--pico-primary-hover);
+  --pico-primary-focus: rgba(15, 110, 86, 0.35);
+  --pico-primary-inverse: #fff;
+
+  /* Shell aliases used by playground components */
+  --color-bg: var(--pico-background-color);
+  --color-surface: var(--pico-card-background-color, #ffffff);
+  --color-ink: var(--pico-color);
+  --color-muted: var(--pico-muted-color);
+  --color-border: var(--pico-muted-border-color);
+  --color-accent: var(--pico-primary);
+  --color-accent-soft: #e6f4ef;
+  --color-accent-hover: var(--pico-primary-hover);
+  --color-bg-glow-1: #dceee8;
+  --color-bg-glow-2: #e8eef5;
+
+  /* Non-color shell tokens (minimal) */
+  --hc-font-sans: var(--pico-font-family-sans-serif);
+  --hc-font-mono: var(--pico-font-family-monospace);
+  --hc-max-width: 52rem;
+  --hc-header-height: 3.5rem;
+  --hc-sidebar-width: 15.5rem;
+
+  --font-sans: var(--hc-font-sans);
+  --font-mono: var(--hc-font-mono);
+  --max-width: var(--hc-max-width);
+  --header-height: var(--hc-header-height);
+  --sidebar-width: var(--hc-sidebar-width);
+
+  accent-color: var(--color-accent);
+}
+
+[data-theme="dark"],
+html.dark {
+  color-scheme: dark;
+
+  --pico-primary: #3dba96;
+  --pico-primary-background: #3dba96;
+  --pico-primary-border: var(--pico-primary-background);
+  --pico-primary-underline: rgba(61, 186, 150, 0.5);
+  --pico-primary-hover: #5fd0ad;
+  --pico-primary-hover-background: #4ec7a3;
+  --pico-primary-hover-border: var(--pico-primary-hover-background);
+  --pico-primary-hover-underline: var(--pico-primary-hover);
+  --pico-primary-focus: rgba(61, 186, 150, 0.35);
+  --pico-primary-inverse: #0a1210;
+
+  --color-bg: var(--pico-background-color);
+  --color-surface: var(--pico-card-background-color, #1a222c);
+  --color-ink: var(--pico-color);
+  --color-muted: var(--pico-muted-color);
+  --color-border: var(--pico-muted-border-color);
+  --color-accent: var(--pico-primary);
+  --color-accent-soft: #16352c;
+  --color-accent-hover: var(--pico-primary-hover);
+  --color-bg-glow-1: #122820;
+  --color-bg-glow-2: #152030;
+
+  accent-color: var(--color-accent);
+}
