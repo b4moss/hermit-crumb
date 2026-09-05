@@ -23,5 +23,6 @@ Nuxt v4 ベースのテックドキュメントサイト向けシェル。npm �
 詳細は [`docs/specs/`](./docs/specs/README.md) を正とする。
 
 - [概要（v0.1.0 スコープ）](./docs/specs/overview.md)
+- [ロードマップ（〜 v0.1.0）](./docs/specs/delivery/roadmap.md)
 - [テーマ（Pico + CSS 変数）](./docs/specs/architecture/theming.md)
 - [決定事項](./docs/specs/decisions.md)

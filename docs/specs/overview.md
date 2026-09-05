@@ -53,4 +53,5 @@ v0.1.0 は、以下を満たした状態で初回 npm 公開する。
 - 配信境界: [architecture/distribution.md](./architecture/distribution.md)
 - テーマ: [architecture/theming.md](./architecture/theming.md)
 - 公開: [delivery/publishing.md](./delivery/publishing.md)
+- ロードマップ: [delivery/roadmap.md](./delivery/roadmap.md)
 - 決定ログ: [decisions.md](./decisions.md)
