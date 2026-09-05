@@ -25,19 +25,29 @@ npm workspaces のモノレポ。
 
 | パス | 役割 |
 | --- | --- |
-| [`packages/hermit-crumb`](./packages/hermit-crumb) | 公開パッケージ `@b4moss/hermit-crumb`（module / 将来の CLI） |
-| [`playground`](./playground) | 本リポ内デモ（Netlify preview 対象。Phase 1 で `doc-site` を取り込み） |
+| [`packages/hermit-crumb`](./packages/hermit-crumb) | 公開パッケージ `@b4moss/hermit-crumb`（module + CLI） |
+| [`playground`](./playground) | create 相当のデモ（Netlify preview 対象） |
 | [`docs/specs`](./docs/specs) | 仕様の正典 |
+| [`docs/migration.md`](./docs/migration.md) | `doc-site` → hermit-crumb 移行ガイド |
 
 ```shell
 npm install
 npm run lint
 npm run typecheck
 npm run build
+npm run test
 npm run generate:playground
 ```
 
 `npm install` の `postinstall` で `@b4moss/hermit-crumb` をビルドする。Node.js **>= 22.19**（Nuxt `^4.5.2` の engines に合わせる）。
+
+### CLI（ローカル）
+
+```shell
+node packages/hermit-crumb/bin/hermit-crumb.mjs --help
+node packages/hermit-crumb/bin/hermit-crumb.mjs create my-docs
+node packages/hermit-crumb/bin/hermit-crumb.mjs add --list
+```
 
 ## 仕様書
 
@@ -48,4 +58,5 @@ npm run generate:playground
 - [配信モデルとリポ構成](./docs/specs/architecture/distribution.md)
 - [CD（release / preview-site）](./docs/specs/delivery/cd.md)
 - [テーマ（Pico + CSS 変数）](./docs/specs/architecture/theming.md)
+- [移行ガイド（実装）](./docs/migration.md)
 - [決定事項](./docs/specs/decisions.md)

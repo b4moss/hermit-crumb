@@ -35,7 +35,7 @@
   - 所有境界（何が npm で何が生成物か）
   - `site.meta.yaml` / CSS 変数 / content の扱い
   - 破壊的差分がある場合の semver 上の注意
-- **配置**: 実装時に `docs/` 配下（例: `docs/migration.md`）へ。本仕様の詳細に従い文書化する
+- **配置**: [`docs/migration.md`](../../migration.md)（Phase 5A で初版）
 
 ## `doc-site` ブランチの廃止
 
