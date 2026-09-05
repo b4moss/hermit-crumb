@@ -12,7 +12,11 @@ export default defineNuxtConfig({
 })
 ```
 
-公開 API は **module 経由のみ**（composables / utils は auto-import）。詳細はリポジトリの [`docs/specs`](../../docs/specs/README.md)。
+- 公開 API は **module 経由のみ**（composables / utils は auto-import）
+- **Pico.css** とカラー用 CSS 変数のデフォルトは module が注入する
+- サイトカラーは `:root` / `[data-theme]` で変数上書き（コンポーネント編集は不要）
+
+詳細はリポジトリの [`docs/specs`](../../docs/specs/README.md)。
 
 ## 開発（モノレポ）
 
@@ -25,4 +29,5 @@ npm run generate:playground
 ## ステータス
 
 - Phase 2: module 配線・`site.meta.yaml`・ロジック runtime
-- Pico.css は Phase 3、CLI は Phase 4
+- Phase 3: Pico.css + カラー変数
+- CLI は Phase 4

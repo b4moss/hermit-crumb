@@ -9,7 +9,11 @@ export default defineNuxtConfig({
   },
   devtools: { enabled: true },
   compatibilityDate: "2024-04-03",
-  css: ["~/assets/css/main.css"],
+  css: [
+    "~/assets/css/main.css",
+    // Demo: color rebrand via CSS variables only (see README).
+    "~/assets/css/theme-override.css",
+  ],
   // GTM: set NUXT_PUBLIC_SCRIPTS_GOOGLE_TAG_MANAGER_ID=GTM-XXXXXXX (build-time for SSG).
   // Empty / unset → tagging stays disabled (see plugins/google-tag-manager.client.ts).
   scripts: {
@@ -19,6 +23,7 @@ export default defineNuxtConfig({
       },
     },
   },
+  // Module sets dataValue: 'theme' for Pico. Keep preference defaults here.
   colorMode: {
     preference: "system",
     fallback: "light",

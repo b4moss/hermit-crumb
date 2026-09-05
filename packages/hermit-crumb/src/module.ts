@@ -13,6 +13,10 @@ export interface HermitCrumbModuleOptions {
    * Consumer nuxt.config still owns detailed module options.
    */
   installDeps?: boolean;
+  /**
+   * When true (default), inject Pico.css + hermit-crumb color tokens via the module.
+   */
+  injectStyles?: boolean;
 }
 
 export default defineNuxtModule<HermitCrumbModuleOptions>({
@@ -25,6 +29,7 @@ export default defineNuxtModule<HermitCrumbModuleOptions>({
   },
   defaults: {
     installDeps: true,
+    injectStyles: true,
   },
   async setup(options, nuxt) {
     const resolver = createResolver(import.meta.url);
@@ -54,11 +59,39 @@ export default defineNuxtModule<HermitCrumbModuleOptions>({
       i18nOptions.baseUrl = siteMeta.siteUrl;
     }
 
+    // Align @nuxtjs/color-mode with Pico's data-theme attribute.
+    const colorMode = (nuxt.options as {
+      colorMode?: Record<string, unknown>;
+    }).colorMode;
+    nuxt.options.colorMode = {
+      preference: "system",
+      fallback: "light",
+      classSuffix: "",
+      dataValue: "theme",
+      ...colorMode,
+    };
+
     if (options.installDeps !== false) {
       await installModule("@nuxt/content");
       await installModule("@nuxtjs/i18n");
       await installModule("@nuxtjs/color-mode");
       await installModule("@nuxt/scripts");
+    }
+
+    if (options.injectStyles !== false) {
+      const picoCss = resolver.resolve(
+        "../node_modules/@picocss/pico/css/pico.min.css",
+      );
+      // Prefer the workspace-hoisted package path when present.
+      const picoCandidates = [
+        "@picocss/pico/css/pico.min.css",
+        picoCss,
+      ];
+      nuxt.options.css = [
+        picoCandidates[0],
+        resolver.resolve("./runtime/styles/tokens.css"),
+        ...(nuxt.options.css || []),
+      ];
     }
 
     addImportsDir(resolver.resolve("./runtime/composables"));

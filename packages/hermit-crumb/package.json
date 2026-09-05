@@ -37,7 +37,9 @@
   "main": "./dist/module.mjs",
   "typesVersions": {
     "*": {
-      ".": ["./dist/types.d.mts"]
+      ".": [
+        "./dist/types.d.mts"
+      ]
     }
   },
   "files": [
@@ -51,6 +53,7 @@
   },
   "dependencies": {
     "@nuxt/kit": "^4.5.2",
+    "@picocss/pico": "^2.1.1",
     "yaml": "^2.9.0"
   },
   "peerDependencies": {

@@ -1,6 +1,6 @@
 # playground
 
-本リポジトリ内のデモ／サンプルサイト。`b4moss/git-template` の `doc-site` を移植し、`@b4moss/hermit-crumb` module の利用例として保守する。Netlify preview（`preview-site` CD）の対象。
+本リポジトリ内のデモ／サンプルサイト。`@b4moss/hermit-crumb` module（Pico.css + カラー変数含む）の利用例。Netlify preview（`preview-site` CD）の対象。
 
 ## 起動
 
@@ -14,9 +14,27 @@ npm run dev:playground
 npm run generate:playground
 ```
 
-## 現状（Phase 2）
+## テーマ（Phase 3）
 
-- `nuxt.config` は `modules: ['@b4moss/hermit-crumb']`
-- `site.meta.yaml` 読込とロジック（ナビ / JSON-LD / FAQ 等）はパッケージ側
-- UI・content・`app/config/docsNav.ts` は playground 所有
-- Pico.css は Phase 3
+- Pico.css とデフォルトトークンは **module が注入**する（利用側で Pico を直 import しない）
+- ライト／ダークは `@nuxtjs/color-mode`（`data-theme`）と連携
+- サイトカラーの差し替えは CSS 変数の上書きのみで行う
+
+デモの上書き例: [`app/assets/css/theme-override.css`](./app/assets/css/theme-override.css)  
+（既定のティールをインディゴ系に変更。コンポーネントは未変更）
+
+```css
+:root,
+[data-theme="light"] {
+  --pico-primary: #3b5bdb;
+  /* ... */
+}
+```
+
+上書きを外す場合は `nuxt.config.ts` の `css` から当該ファイルを削除する。
+
+## 現状
+
+- Phase 2: module 利用側（UI / content / `docsNav` は playground 所有）
+- Phase 3: Pico + カラー変数
+- CLI / Netlify CD は後続 Phase
