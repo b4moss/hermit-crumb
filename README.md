@@ -29,6 +29,7 @@ npm workspaces のモノレポ。
 | [`playground`](./playground) | create 相当のデモ（Netlify preview 対象） |
 | [`docs/specs`](./docs/specs) | 仕様の正典 |
 | [`docs/migration.md`](./docs/migration.md) | `doc-site` → hermit-crumb 移行ガイド |
+| [`docs/netlify.md`](./docs/netlify.md) | Netlify preview（`preview-site`）セットアップ |
 
 ```shell
 npm install
@@ -57,6 +58,7 @@ node packages/hermit-crumb/bin/hermit-crumb.mjs add --list
 - [ロードマップ（〜 v0.1.0／エージェント・Multi task）](./docs/specs/delivery/roadmap.md)
 - [配信モデルとリポ構成](./docs/specs/architecture/distribution.md)
 - [CD（release / preview-site）](./docs/specs/delivery/cd.md)
+- [Netlify セットアップ](./docs/netlify.md)
 - [テーマ（Pico + CSS 変数）](./docs/specs/architecture/theming.md)
 - [移行ガイド（実装）](./docs/migration.md)
 - [決定事項](./docs/specs/decisions.md)

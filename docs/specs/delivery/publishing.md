@@ -37,7 +37,7 @@
 | 非対象（初期） | 別 example リポジトリ前提の preview |
 | **CD** | **`preview-site` ブランチ**へのマージで Netlify リリース |
 
-デモサイトは `create` 相当の利用例として保守し、module と生成物の組み合わせが常に動作確認できる状態を目指す。更新は `preview-site` へマージして CD で出す。
+デモサイトは `create` 相当の利用例として保守し、module と生成物の組み合わせが常に動作確認できる状態を目指す。更新は `preview-site` へマージして CD で出す。セットアップ手順は [docs/netlify.md](../../netlify.md)。
 
 ## 関連決定
 
@@ -46,5 +46,6 @@
 ## 関連文書
 
 - CD 詳細: [cd.md](./cd.md)
+- Netlify 手順: [docs/netlify.md](../../netlify.md)
 - 実装順・エージェント／Multi task: [roadmap.md](./roadmap.md)
 - スコープ: [overview.md](../overview.md)

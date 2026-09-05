@@ -47,4 +47,4 @@ npx @b4moss/hermit-crumb create my-docs
 
 - 移行ガイド: [`docs/migration.md`](../docs/migration.md)
 - 仕様: [`docs/specs`](../docs/specs/README.md)
-- Netlify CD 配線は Phase 5B（`preview-site`）
+- Netlify CD: [`docs/netlify.md`](../docs/netlify.md)（`preview-site` へのマージでデプロイ）
