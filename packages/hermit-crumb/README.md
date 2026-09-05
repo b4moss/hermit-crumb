@@ -1,61 +1,42 @@
 # `@b4moss/hermit-crumb`
 
-Nuxt v4 向けテックドキュメントサイトの殻（Nuxt module + CLI）。**v0.1.0**。
+Nuxt v4 tech documentation site shell (module + CLI).
 
-## インストール
-
-```shell
-npm install @b4moss/hermit-crumb
-```
-
-新規サイト:
+## Install
 
 ```shell
 npx @b4moss/hermit-crumb create my-docs
 cd my-docs && npm install && npm run dev
 ```
 
-## Module
+Or add the module to an existing Nuxt app:
 
-```ts
-// nuxt.config.ts
-export default defineNuxtConfig({
-  modules: ["@b4moss/hermit-crumb"],
-  // Content / i18n / color-mode / scripts の詳細は従来どおりここに書く
-})
+```shell
+npm install @b4moss/hermit-crumb
 ```
 
-- 公開 API は **module 経由のみ**（composables / utils は auto-import）
-- **Pico.css** とカラー用 CSS 変数のデフォルトは module が注入する
-- サイトカラーは `:root` / `[data-theme]` で変数上書き（コンポーネント編集は不要）
+```ts
+export default defineNuxtConfig({
+  modules: ["@b4moss/hermit-crumb"],
+})
+```
 
 ## CLI
 
 ```shell
-npx @b4moss/hermit-crumb --help
 npx @b4moss/hermit-crumb create my-docs
 npx @b4moss/hermit-crumb add --list
 npx @b4moss/hermit-crumb add DocsPager
-npx @b4moss/hermit-crumb add DocsPager --force
 ```
 
-`create` / `add` で生成した UI は **利用側所有**です。既存ファイルは上書きしません（`--force` のみ）。
+Generated UI is owned by your project; updates never overwrite it unless you pass `--force`.
 
-## ドキュメント
+## Docs
 
-- 仕様: リポジトリ [`docs/specs`](https://github.com/b4moss/hermit-crumb/tree/main/docs/specs)
-- 移行: [`docs/migration.md`](https://github.com/b4moss/hermit-crumb/blob/main/docs/migration.md)
-- Changelog: [`CHANGELOG.md`](https://github.com/b4moss/hermit-crumb/blob/main/CHANGELOG.md)
+Full documentation: [hermit-crumb docs](https://github.com/b4moss/hermit-crumb/tree/main/docs).
 
-## 開発（このモノレポ）
-
-```shell
-npm install
-npm run build -w @b4moss/hermit-crumb
-npm run test -w @b4moss/hermit-crumb
-npm run generate:playground
-```
-
-## ステータス
-
-- v0.1.0: module・CLI（`create` / `add`）・Pico テーマ・playground・Netlify / npm CD 配線
+- [Usage](https://github.com/b4moss/hermit-crumb/blob/main/docs/usage.md)
+- [Module](https://github.com/b4moss/hermit-crumb/blob/main/docs/module.md)
+- [Theming](https://github.com/b4moss/hermit-crumb/blob/main/docs/theming.md)
+- [site.meta.yaml](https://github.com/b4moss/hermit-crumb/blob/main/docs/site-meta.md)
+- [Changelog](https://github.com/b4moss/hermit-crumb/blob/main/CHANGELOG.md)

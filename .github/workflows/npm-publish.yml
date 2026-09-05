@@ -1,5 +1,5 @@
 # Publishes @b4moss/hermit-crumb when a tagged commit lands on `release`.
-# Spec: docs/specs/delivery/cd.md (decision 19)
+# See docs/publishing.md.
 
 name: npm publish
 

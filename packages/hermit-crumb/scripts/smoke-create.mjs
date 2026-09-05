@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Phase 4B smoke: create → rewrite dep to file: → npm install → nuxt prepare
+ * Smoke: create → rewrite dep to file: → npm install → nuxt prepare
  * (公開前でもモノレポ内のパッケージ実体で検証する)
  */
 import { mkdtemp, readFile, writeFile, rm } from "node:fs/promises";
