@@ -10,10 +10,13 @@
   "scripts": {
     "lint": "npm run lint -w @b4moss/hermit-crumb",
     "typecheck": "npm run typecheck -w @b4moss/hermit-crumb",
-    "build": "npm run build -w @b4moss/hermit-crumb"
+    "build": "npm run build -w @b4moss/hermit-crumb",
+    "dev:playground": "npm run dev -w hermit-crumb-playground",
+    "generate:playground": "npm run generate -w hermit-crumb-playground",
+    "typecheck:playground": "npm run typecheck -w hermit-crumb-playground"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22.19.0"
   },
   "license": "MIT"
 }

@@ -28,3 +28,11 @@ Thumbs.db
 # Coverage / test
 coverage/
 .nyc_output/
+# Nuxt / Nitro (playground)
+.nitro/
+# Local playground site meta (copy from site.meta.yaml.example)
+
+site.meta.yaml
+
+# Accidental Nuxt dist symlink/dir
+playground/dist

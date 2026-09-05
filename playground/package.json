@@ -3,16 +3,27 @@
   "private": true,
   "type": "module",
   "description": "In-repo demo / playground for @b4moss/hermit-crumb (Netlify preview target)",
-  "dependencies": {
-    "@b4moss/hermit-crumb": "*"
-  },
   "scripts": {
-    "dev": "node -e \"console.log('playground: Phase 1 で doc-site を取り込み後に nuxt dev を配線')\"",
-    "build": "node -e \"console.log('playground: Phase 1 以降で nuxt generate / build を配線')\"",
-    "generate": "node -e \"console.log('playground: Phase 1 以降で nuxt generate を配線')\""
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "prepare": "nuxt prepare",
+    "typecheck": "nuxt typecheck"
+  },
+  "dependencies": {
+    "@b4moss/hermit-crumb": "*",
+    "@nuxt/content": "^3.14.0",
+    "@nuxt/scripts": "^1.3.0",
+    "@nuxtjs/color-mode": "^4.0.1",
+    "@nuxtjs/i18n": "^9.5.6",
+    "nuxt": "^4.5.2",
+    "vue": "^3.5.35",
+    "vue-router": "^4.5.1",
+    "yaml": "^2.9.0"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22.19.0"
   },
   "license": "MIT"
 }

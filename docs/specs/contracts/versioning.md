@@ -7,6 +7,7 @@
 ## 依存バージョン方針
 
 - **`doc-site` 現状に固定**する（Nuxt 4.5 系および現行 Content / i18n / color-mode / scripts 等）
+- **Node.js `>=22.19.0`**（Nuxt `^4.5.2` の engines に合わせる）
 - **Pico.css** をスタイルベースとして追加依存する（具体バージョンは v0.1.0 実装時に固定）
 - 周辺 major への追随は **別判断**（初期リリースの自動追従はしない）
 - パッケージの `peerDependencies` / `dependencies` の具体レンジは、移植時の `doc-site/package.json` ＋ Pico の固定版を正とする
