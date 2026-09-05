@@ -1,0 +1,18 @@
+{
+  "name": "hermit-crumb-playground",
+  "private": true,
+  "type": "module",
+  "description": "In-repo demo / playground for @b4moss/hermit-crumb (Netlify preview target)",
+  "dependencies": {
+    "@b4moss/hermit-crumb": "*"
+  },
+  "scripts": {
+    "dev": "node -e \"console.log('playground: Phase 1 で doc-site を取り込み後に nuxt dev を配線')\"",
+    "build": "node -e \"console.log('playground: Phase 1 以降で nuxt generate / build を配線')\"",
+    "generate": "node -e \"console.log('playground: Phase 1 以降で nuxt generate を配線')\""
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}

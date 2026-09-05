@@ -19,12 +19,30 @@ Nuxt v4 ベースのテックドキュメントサイト向けシェル。npm �
 - `site.meta.yaml` はスキーマをパッケージ、値を利用側が持つ
 - 移植元は `b4moss/git-template` の `doc-site` ブランチ
 
+## リポジトリ構成
+
+npm workspaces のモノレポ。
+
+| パス | 役割 |
+| --- | --- |
+| [`packages/hermit-crumb`](./packages/hermit-crumb) | 公開パッケージ `@b4moss/hermit-crumb`（module / 将来の CLI） |
+| [`playground`](./playground) | 本リポ内デモ（Netlify preview 対象。Phase 1 で `doc-site` を取り込み） |
+| [`docs/specs`](./docs/specs) | 仕様の正典 |
+
+```shell
+npm install
+npm run lint
+npm run typecheck
+npm run build
+```
+
 ## 仕様書
 
-詳細は [`docs/specs/`](./docs/specs/README.md) を正とする。
+詳細は [`docs/specs/`](./docs/specs/README.md) を**正**とする。実装や公開契約を変える差分では、コードとあわせて同ディレクトリの仕様も更新する。
 
 - [概要（v0.1.0 スコープ）](./docs/specs/overview.md)
 - [ロードマップ（〜 v0.1.0／エージェント・Multi task）](./docs/specs/delivery/roadmap.md)
+- [配信モデルとリポ構成](./docs/specs/architecture/distribution.md)
 - [CD（release / preview-site）](./docs/specs/delivery/cd.md)
 - [テーマ（Pico + CSS 変数）](./docs/specs/architecture/theming.md)
 - [決定事項](./docs/specs/decisions.md)

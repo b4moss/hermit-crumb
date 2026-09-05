@@ -1,0 +1,50 @@
+{
+  "name": "@b4moss/hermit-crumb",
+  "version": "0.1.0",
+  "description": "Nuxt v4 tech documentation site shell (module + CLI)",
+  "type": "module",
+  "license": "MIT",
+  "author": "Bicycle for Mind LLC",
+  "keywords": [
+    "nuxt",
+    "nuxt-module",
+    "documentation",
+    "docs",
+    "pico-css",
+    "i18n"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/b4moss/hermit-crumb.git",
+    "directory": "packages/hermit-crumb"
+  },
+  "bugs": {
+    "url": "https://github.com/b4moss/hermit-crumb/issues"
+  },
+  "homepage": "https://github.com/b4moss/hermit-crumb#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/module.d.ts",
+      "import": "./dist/module.mjs"
+    }
+  },
+  "main": "./dist/module.mjs",
+  "types": "./dist/module.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node ./scripts/build.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "node ./scripts/lint.mjs"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
+}

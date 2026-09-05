@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Builds / caches
+dist/
+.nuxt/
+.output/
+.data/
+.cache/
+*.tsbuildinfo
+
+# Logs / env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Coverage / test
+coverage/
+.nyc_output/

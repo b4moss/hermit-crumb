@@ -1,0 +1,19 @@
+{
+  "name": "hermit-crumb-monorepo",
+  "private": true,
+  "type": "module",
+  "description": "Monorepo for @b4moss/hermit-crumb (Nuxt v4 tech doc site shell)",
+  "workspaces": [
+    "packages/*",
+    "playground"
+  ],
+  "scripts": {
+    "lint": "npm run lint -w @b4moss/hermit-crumb",
+    "typecheck": "npm run typecheck -w @b4moss/hermit-crumb",
+    "build": "npm run build -w @b4moss/hermit-crumb"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}

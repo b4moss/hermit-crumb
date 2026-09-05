@@ -6,6 +6,7 @@
 - **npm パッケージ**: `@b4moss/hermit-crumb`
 - **位置づけ**: Nuxt v4 ベースのテックドキュメントサイト向けシェル
 - **初回公開バージョン**: **v0.1.0**（本仕様の実現をもって npmjs.org に公開）
+- **リポジトリ構成**: npm workspaces。公開パッケージは `packages/hermit-crumb`、本リポ内デモは `playground`（詳細は [architecture/distribution.md](./architecture/distribution.md)）
 
 ## 目的
 
