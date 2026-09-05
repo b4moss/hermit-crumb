@@ -1,5 +1,15 @@
 # 配信モデルと所有境界
 
+## リポジトリ構成（モノレポ）
+
+npm workspaces。公開物とデモを分離する。
+
+| パス | 役割 | publish |
+| --- | --- | --- |
+| `packages/hermit-crumb` | `@b4moss/hermit-crumb`（Nuxt module・将来の CLI / テンプレ） | する（`release` + タグ CD） |
+| `playground` | 本リポ内デモ／サンプル（`create` 相当の利用例。Netlify 対象） | しない |
+| `docs/specs` | 仕様の正典（実装差分時に更新） | しない |
+
 ## 方針サマリ
 
 殻（共通ロジック・基盤）は npm パッケージ `@b4moss/hermit-crumb` として配信する。利用開始は **新規プロジェクトの `create` が主**。見た目コンポーネントは基本 **`add` で利用側に生成して所有**する。

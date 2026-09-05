@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# Builds / caches
+dist/
+.nuxt/
+.output/
+.data/
+.cache/
+*.tsbuildinfo
+
+# Logs / env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Coverage / test
+coverage/
+.nyc_output/
+# Nuxt / Nitro (playground)
+.nitro/
+# Local playground site meta (copy from site.meta.yaml.example)
+
+site.meta.yaml
+
+# Accidental Nuxt dist symlink/dir
+playground/dist

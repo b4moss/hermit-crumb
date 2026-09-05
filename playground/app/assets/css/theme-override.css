@@ -1,0 +1,40 @@
+/**
+ * Demo: rebrand colors by overriding CSS variables only.
+ * Loaded after hermit-crumb tokens. Toggle values here to verify Phase 3.4.
+ *
+ * Example: indigo accent instead of the default teal.
+ */
+:root,
+[data-theme="light"] {
+  --pico-primary: #3b5bdb;
+  --pico-primary-background: #3b5bdb;
+  --pico-primary-border: var(--pico-primary-background);
+  --pico-primary-underline: rgba(59, 91, 219, 0.5);
+  --pico-primary-hover: #364fc7;
+  --pico-primary-hover-background: #3b5bdb;
+  --pico-primary-hover-border: var(--pico-primary-hover-background);
+  --pico-primary-hover-underline: var(--pico-primary-hover);
+  --pico-primary-focus: rgba(59, 91, 219, 0.35);
+
+  --color-accent-soft: #edf2ff;
+  --color-bg-glow-1: #dbe4ff;
+  --color-bg-glow-2: #e7f5ff;
+}
+
+[data-theme="dark"],
+html.dark {
+  --pico-primary: #748ffc;
+  --pico-primary-background: #748ffc;
+  --pico-primary-border: var(--pico-primary-background);
+  --pico-primary-underline: rgba(116, 143, 252, 0.5);
+  --pico-primary-hover: #91a7ff;
+  --pico-primary-hover-background: #748ffc;
+  --pico-primary-hover-border: var(--pico-primary-hover-background);
+  --pico-primary-hover-underline: var(--pico-primary-hover);
+  --pico-primary-focus: rgba(116, 143, 252, 0.35);
+  --pico-primary-inverse: #101525;
+
+  --color-accent-soft: #1b2340;
+  --color-bg-glow-1: #152038;
+  --color-bg-glow-2: #1a1f36;
+}

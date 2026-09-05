@@ -1,0 +1,86 @@
+# このファイルを site.meta.yaml にコピーして、プロジェクト向けに編集してください。
+# site.meta.yaml は gitignore 済み。無い場合はこの example がフォールバックになります。
+#
+# =============================================================================
+# 【ここで書くもの】サイト共通 → 全ページの SoftwareSourceCode（#40）
+#
+#   Markdown の frontmatter には書かない。
+#   この YAML を書くと、各ページ JSON-LD の @graph にだいたいこう出る:
+#
+#   {
+#     "@type": "SoftwareSourceCode",
+#     "@id": "https://example.com/#software",
+#     "name": "My OSS",
+#     "codeRepository": "https://github.com/example/my-oss",
+#     "license": "MIT",
+#     "programmingLanguage": ["TypeScript"]
+#   }
+#
+#   各ページの WebPage / TechArticle は about: { "@id": "…/#software" } で参照する。
+#
+# フィールド:
+#   siteName / siteUrl / githubUrl / npmUrl … UI・URL 生成・フォールバックにも使う
+#   software.name                 → SoftwareSourceCode.name（省略時は siteName）
+#   software.codeRepository       → codeRepository（省略時は githubUrl）
+#   software.license              → license（例: MIT）
+#   software.programmingLanguage  → 文字列の配列（空 [] なら JSON-LD に出さない）
+#
+# ページ役割（TechArticle / FAQPage / HowTo）は各 Markdown の schemaRole 側。
+# FAQ の Q/A は本文の ::faq-item。詳細は content/ja/overview.md や faq.md のコメントへ。
+# =============================================================================
+
+siteName: Doc Site
+siteUrl: https://example.com
+siteVersion: "0.9.0"
+description: Nuxt Content documentation site scaffold
+githubUrl: https://github.com/b4moss/git-template
+# ヘッダー右端の npm アイコン。空 / 未設定なら非表示。
+npmUrl: ""
+footerText: "MIT License · 2026 Bicycle for Mind LLC."
+
+software:
+  # → SoftwareSourceCode.name（省略時は siteName）
+  name: Doc Site
+  # → SoftwareSourceCode.codeRepository（省略時は githubUrl）
+  codeRepository: https://github.com/b4moss/git-template
+  # → SoftwareSourceCode.license
+  license: MIT
+  # → SoftwareSourceCode.programmingLanguage（例: [ TypeScript, Vue ]）
+  programmingLanguage: []
+
+# -----------------------------------------------------------------------------
+# 自社情報（Organization）— 全ページ共通
+#
+# このブロックを有効にすると Organization エンティティが全ページに出力され、
+# WebPage / WebSite / TechArticle / HowTo に publisher 参照が付く。
+# 未設定なら Organization も publisher も出ない（従来どおり）。
+#
+# @type（Organization）と @id（{siteUrl}/#organization）は自動。
+# name / url は siteName / siteUrl が既定値で、下に書けば上書きされる。
+#
+# 以下はダミー。実値は差し替えて使う。
+# -----------------------------------------------------------------------------
+# organization:
+#   name: Example Inc.
+#   url: https://example.com/
+#   logo: https://example.com/logo.png
+#   sameAs:
+#     - https://github.com/example
+#     - https://x.com/example
+
+# -----------------------------------------------------------------------------
+# エスケープハッチ（サイト全体）
+#
+# 標準セット（WebPage / WebSite / SoftwareSourceCode / Organization / 役割）に
+# 収まらないエンティティを、全ページの @graph 末尾へそのまま追加する。
+# 既定値は一切付かないので @type と @id は自分で書く。
+#
+# ページ単位で足したい場合は、各 Markdown の frontmatter に jsonLd.extra を書く。
+# 標準エンティティに「プロパティを足す」だけなら jsonLd.webPage /
+# jsonLd.entities を使う（docs/jsonld_ja.md 参照）。
+# -----------------------------------------------------------------------------
+# jsonLdExtra:
+#   - "@type": ContactPoint
+#     "@id": https://example.com/#support
+#     contactType: customer support
+#     email: support@example.com

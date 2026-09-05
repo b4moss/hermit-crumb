@@ -1,0 +1,9 @@
+node_modules
+.nuxt
+.output
+.data
+dist
+site.meta.yaml
+.env
+*.log
+.DS_Store

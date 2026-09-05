@@ -1,0 +1,21 @@
+# Changelog
+
+All notable changes to `@b4moss/hermit-crumb` are documented in this file.
+
+## [0.1.0] — 2026-09-05
+
+初回公開。
+
+### Added
+
+- Nuxt v4 module（`@b4moss/hermit-crumb`）— Pico.css / カラー CSS 変数 / `site.meta.yaml` / composables
+- CLI `hermit-crumb create` — シェル・日英 content・デフォルト UI 一式
+- CLI `hermit-crumb add` — コンポーネント追加（既存はスキップ、`--force` のみ上書き）
+- モノレポ `playground` — create 相当のデモ（Netlify `preview-site` 対象）
+- 移行ガイド（`docs/migration.md`）
+- CD: `preview-site` → Netlify、`release` + `v*` タグ → npm
+
+### Notes
+
+- Node.js `>= 22.19`
+- 生成 UI / content は利用側所有（パッケージ更新では自動上書きしない）

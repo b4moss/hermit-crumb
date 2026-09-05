@@ -6,6 +6,7 @@
 - **npm パッケージ**: `@b4moss/hermit-crumb`
 - **位置づけ**: Nuxt v4 ベースのテックドキュメントサイト向けシェル
 - **初回公開バージョン**: **v0.1.0**（本仕様の実現をもって npmjs.org に公開）
+- **リポジトリ構成**: npm workspaces。公開パッケージは `packages/hermit-crumb`、本リポ内デモは `playground`（詳細は [architecture/distribution.md](./architecture/distribution.md)）
 
 ## 目的
 
@@ -48,6 +49,7 @@ v0.1.0 は、以下を満たした状態で初回 npm 公開する。
 | リポジトリ | https://github.com/b4moss/git-template |
 | ブランチ | `doc-site` |
 | 現状スタック（固定方針） | Nuxt `^4.5.2`、`@nuxt/content` `^3.14.0`、`@nuxtjs/i18n` `^9.5.6`、`@nuxtjs/color-mode` `^4.0.1`、`@nuxt/scripts` `^1.3.0` など（`doc-site` の `package.json` に準拠） |
+| Node.js | `>=22.19.0`（Nuxt `^4.5.2` の engines に合わせる。playground 実行・CI で使用） |
 | スタイルベース（追加） | Pico.css（v0.1.0 で導入。具体バージョンは実装時に固定） |
 
 ## 関連文書

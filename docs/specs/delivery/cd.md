@@ -28,8 +28,10 @@ CI（lint / test / build）と CD は分離してよい。CD は上記ブラン�
 
 ### 前提
 
-- `@b4moss` scope の npm トークン等を CD シークレットとして保持する
+- `@b4moss` scope の npm トークン等を CD シークレット（`NPM_TOKEN`）として保持する
 - publish 前に pack／ビルドが成功していること
+- 実装: [`.github/workflows/npm-publish.yml`](../../../.github/workflows/npm-publish.yml)
+- 手順: [docs/npm-publish.md](../../npm-publish.md)
 
 ## Netlify リリース（`preview-site`）
 
@@ -44,8 +46,11 @@ CI（lint / test / build）と CD は分離してよい。CD は上記ブラン�
 
 ### 前提
 
-- Netlify サイトとリポジトリ／ブランチの接続、または CD からのデプロイトークン
-- デモのビルドコマンドと公開ディレクトリが決まっていること（Phase 5 で確定）
+- Netlify サイトとリポジトリ／ブランチの接続（Git 連携。手順は [docs/netlify.md](../../netlify.md)）
+- ビルド（ルート `netlify.toml` で確定）:
+  - コマンド: `npm ci && npm run generate:playground`
+  - publish: `playground/.output/public`
+  - Node.js: `22.19`
 
 ## ブランチ役割（v0.1.0）
 
@@ -71,3 +76,4 @@ CI（lint / test / build）と CD は分離してよい。CD は上記ブラン�
 
 - [publishing.md](./publishing.md)
 - [roadmap.md](./roadmap.md)
+- 実装手順（オーナー向け）: [docs/netlify.md](../../netlify.md)、[docs/npm-publish.md](../../npm-publish.md)
