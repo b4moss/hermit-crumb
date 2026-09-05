@@ -73,16 +73,17 @@ defineExpose({ close, open });
 </script>
 
 <template>
+  <!-- Avoid class name "dropdown" — Pico CSS owns that and shifts layout. -->
   <div
     ref="root"
-    class="dropdown"
-    :class="{ 'dropdown--icon': iconOnly }"
+    class="hc-menu"
+    :class="{ 'hc-menu--icon': iconOnly }"
     :data-open="open ? 'true' : 'false'"
   >
     <button
       :id="triggerId"
       type="button"
-      class="dropdown-trigger"
+      class="hc-menu__trigger"
       :aria-label="label"
       :aria-expanded="open"
       aria-haspopup="listbox"
@@ -91,19 +92,23 @@ defineExpose({ close, open });
     >
       <slot name="trigger">
         <template v-if="!iconOnly">
-          <span class="trigger-text trigger-text--full">{{ triggerText }}</span>
-          <span class="trigger-text trigger-text--compact">
+          <span class="hc-menu__text hc-menu__text--full">{{ triggerText }}</span>
+          <span class="hc-menu__text hc-menu__text--compact">
             {{ compactText || triggerText }}
           </span>
-          <span class="chevron" aria-hidden="true" />
+          <span class="hc-menu__chevron" aria-hidden="true" />
         </template>
       </slot>
-      <span v-if="!iconOnly && $slots.trigger" class="chevron" aria-hidden="true" />
+      <span
+        v-if="!iconOnly && $slots.trigger"
+        class="hc-menu__chevron"
+        aria-hidden="true"
+      />
     </button>
     <div
       v-show="open"
       :id="listId"
-      class="dropdown-menu"
+      class="hc-menu__panel"
       role="listbox"
       :aria-labelledby="triggerId"
     >
@@ -113,15 +118,24 @@ defineExpose({ close, open });
 </template>
 
 <style scoped>
-.dropdown {
+.hc-menu {
   position: relative;
-}
-
-.dropdown-trigger {
   display: inline-flex;
   align-items: center;
+  margin: 0;
+  vertical-align: middle;
+  line-height: 0;
+}
+
+.hc-menu__trigger {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   gap: 0.35rem;
+  margin: 0;
   min-height: 2.25rem;
+  height: 2.25rem;
   padding: 0.35rem 0.55rem;
   border: 1px solid var(--color-border);
   border-radius: 0.35rem;
@@ -129,35 +143,45 @@ defineExpose({ close, open });
   color: var(--color-ink);
   font: inherit;
   font-size: 0.875rem;
-  line-height: 1.2;
+  font-weight: 400;
+  line-height: 1;
   white-space: nowrap;
   cursor: pointer;
 }
 
-.dropdown--icon .dropdown-trigger {
-  justify-content: center;
+.hc-menu--icon .hc-menu__trigger {
   width: 2.25rem;
   padding: 0;
+  border-color: transparent;
+  background: transparent;
   color: var(--color-muted);
+  line-height: 0;
 }
 
-.dropdown--icon .dropdown-trigger:hover {
+.hc-menu--icon .hc-menu__trigger:hover {
   color: var(--color-ink);
-}
-
-.dropdown-trigger:hover {
   background: var(--color-accent-soft);
 }
 
-.dropdown[data-open="true"] .dropdown-trigger {
+.hc-menu__trigger:hover {
+  background: var(--color-accent-soft);
+}
+
+.hc-menu[data-open="true"] .hc-menu__trigger {
   border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
 }
 
-.trigger-text--compact {
+.hc-menu--icon[data-open="true"] .hc-menu__trigger {
+  border-color: transparent;
+  color: var(--color-ink);
+  background: var(--color-accent-soft);
+}
+
+.hc-menu__text--compact {
   display: none;
 }
 
-.chevron {
+.hc-menu__chevron {
   width: 0.4rem;
   height: 0.4rem;
   border-right: 1.5px solid currentColor;
@@ -167,46 +191,47 @@ defineExpose({ close, open });
   flex-shrink: 0;
 }
 
-.dropdown[data-open="true"] .chevron {
+.hc-menu[data-open="true"] .hc-menu__chevron {
   transform: translateY(1px) rotate(-135deg);
 }
 
-.dropdown-menu {
+.hc-menu__panel {
   position: absolute;
   top: calc(100% + 0.35rem);
   right: 0;
   z-index: 40;
-  min-width: max(100%, 11.5rem);
+  box-sizing: border-box;
+  min-width: max(100%, 10.5rem);
   width: max-content;
-  max-width: min(18rem, calc(100vw - 2rem));
-  padding: 0.3rem;
+  max-width: min(16rem, calc(100vw - 2rem));
+  margin: 0;
+  padding: 0.25rem;
   border: 1px solid var(--color-border);
   border-radius: 0.45rem;
   background: var(--color-surface);
   box-shadow: 0 10px 28px color-mix(in srgb, var(--color-ink) 12%, transparent);
+  line-height: normal;
 }
 
 @media (max-width: 640px) {
-  .dropdown:not(.dropdown--icon) .dropdown-trigger {
+  .hc-menu:not(.hc-menu--icon) .hc-menu__trigger {
     min-width: 2.25rem;
-    justify-content: center;
     padding: 0.35rem 0.45rem;
   }
 
-  .dropdown:not(.dropdown--icon) .trigger-text--full {
+  .hc-menu:not(.hc-menu--icon) .hc-menu__text--full {
     display: none;
   }
 
-  .dropdown:not(.dropdown--icon) .trigger-text--compact {
+  .hc-menu:not(.hc-menu--icon) .hc-menu__text--compact {
     display: inline;
     font-size: 0.8rem;
     font-weight: 600;
     letter-spacing: 0.02em;
   }
 
-  .dropdown-menu {
-    min-width: 12.5rem;
-    padding: 0.4rem;
+  .hc-menu__panel {
+    min-width: 11.5rem;
   }
 }
 </style>

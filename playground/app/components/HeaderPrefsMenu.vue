@@ -60,8 +60,8 @@ function chooseTheme(value: string, closeOuter: () => void) {
 
     <template #default="{ close }">
       <div class="prefs-menu">
-        <div class="section" role="group" :aria-label="t('nav.language')">
-          <p class="section-label">{{ t("nav.language") }}</p>
+        <div class="section" :aria-label="t('nav.language')">
+          <div class="section-label">{{ t("nav.language") }}</div>
           <div class="option-list">
             <button
               v-for="item in languageOptions"
@@ -78,8 +78,8 @@ function chooseTheme(value: string, closeOuter: () => void) {
           </div>
         </div>
 
-        <div class="section" role="group" :aria-label="t('theme.label')">
-          <p class="section-label">{{ t("theme.label") }}</p>
+        <div class="section" :aria-label="t('theme.label')">
+          <div class="section-label">{{ t("theme.label") }}</div>
           <div class="option-list">
             <button
               v-for="item in themeOptions"
@@ -103,37 +103,48 @@ function chooseTheme(value: string, closeOuter: () => void) {
 <style scoped>
 .gear-icon {
   display: block;
+  flex-shrink: 0;
 }
 
 .prefs-menu {
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
-  min-width: 11.5rem;
+  gap: 0.25rem;
+  min-width: 9.5rem;
   width: max-content;
-  max-width: min(18rem, calc(100vw - 2rem));
+  max-width: min(16rem, calc(100vw - 2rem));
 }
 
 .section {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  align-items: stretch;
+  gap: 0.125rem;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
   min-width: 0;
 }
 
 .section + .section {
-  padding-top: 0.55rem;
+  margin: 0;
+  padding-top: 0.25rem;
   border-top: 1px solid var(--color-border);
 }
 
 .section-label {
+  display: block;
+  box-sizing: border-box;
   margin: 0;
-  padding: 0.15rem 0.65rem 0.1rem;
+  padding: 0.15rem 0.5rem;
   color: var(--color-muted);
-  font-size: 0.7rem;
+  font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: 0.04em;
-  line-height: 1.3;
+  line-height: 1.2;
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -141,43 +152,50 @@ function chooseTheme(value: string, closeOuter: () => void) {
 .option-list {
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;
+  gap: 0;
+  margin: 0;
+  padding: 0;
 }
 
-.option {
+.prefs-menu button.option {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   width: 100%;
-  min-height: 2.1rem;
-  padding: 0.4rem 0.65rem;
+  margin: 0;
+  min-height: 0;
+  height: auto;
+  padding: 0.35rem 0.5rem;
   border: 0;
   border-radius: 0.3rem;
   background: transparent;
+  box-shadow: none;
   color: var(--color-ink);
   font: inherit;
   font-size: 0.875rem;
-  line-height: 1.3;
+  font-weight: 400;
+  line-height: 1.25;
   text-align: left;
   white-space: nowrap;
   cursor: pointer;
 }
 
-.option:hover {
+.prefs-menu button.option:hover {
   background: var(--color-accent-soft);
 }
 
-.option[data-active="true"] {
+.prefs-menu button.option[data-active="true"] {
   color: var(--color-accent);
   font-weight: 600;
 }
 
 @media (max-width: 640px) {
   .prefs-menu {
-    min-width: 12.5rem;
+    min-width: 10.5rem;
   }
 
-  .option {
-    min-height: 2.4rem;
+  .prefs-menu button.option {
+    padding: 0.45rem 0.5rem;
     font-size: 0.95rem;
   }
 }
