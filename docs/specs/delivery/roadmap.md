@@ -15,9 +15,9 @@ Phase 3 Pico.css + カラー変数 ──┐
     ↓                          │（create テンプレ見た目は Pico 確定後）
 Phase 4 CLI（create / add）←───┘
     ↓
-Phase 5 デモ・Netlify・移行ガイド
+Phase 5 デモ・Netlify CD・移行ガイド
     ↓
-Phase 6 v0.1.0 公開
+Phase 6 v0.1.0 公開（npm CD via `release`）
 ```
 
 ## エージェント実装・Multi task 方針
@@ -33,8 +33,8 @@ Phase 6 v0.1.0 公開
 | 2 | module 骨格＋`site.meta`＋ロジック寄せ | **Phase 2 全体を 1 本**が上限感。設計が重い |
 | 3 | Pico 導入＋変数＋デモ見た目 | UI/CSS に閉じる 1 本 |
 | 4 | **`create` と `add` を別セッションに分割** | まとめると大きすぎる |
-| 5 | デモ整備 / Netlify / 移行ガイドを **各 1 本** | 成果物が配線・文書中心 |
-| 6 | 公開チェック＋ publish | 短い（npm 権限前提） |
+| 5 | デモ整備 / Netlify CD（`preview-site`）/ 移行ガイドを **各 1 本** | 成果物が配線・文書中心 |
+| 6 | npm CD（`release`）＋ v0.1.0 タグ／マージ公開 | 短い（権限前提）。CD 配線は 5 と並行可 |
 
 ### Multi task（並行）してよいところ
 
@@ -45,16 +45,18 @@ Phase 6 v0.1.0 公開
 | Phase 0 内 | `package.json`／ライセンス等 | CI 骨格 | 両方マージ後に Phase 1 |
 | Phase 2 **完了後** | **Phase 3**（Pico＋カラー変数＋デモ見た目） | **Phase 4 前半**（CLI 骨格・`add` の非上書き・`--force`・ヘルプ） | create が吐く UI／CSS テンプレは **Phase 3 後**に確定 |
 | Phase 3 完了後の Phase 4 内 | `create` の content／デフォルト UI 生成 | `add` テンプレ追加 | 生成ファイルが被らないこと |
-| Phase 5 内 | 移行ガイド執筆 | Netlify 配線 | デモの置き場が決まっていること |
+| Phase 5 内 | 移行ガイド執筆 | Netlify CD（`preview-site`） | デモの置き場が決まっていること |
+| Phase 5〜6 | Netlify CD（`preview-site`） | npm CD（`release`） | シークレットは人間が先に用意 |
 
 ### おすすめの Multi task 塊
 
 1. **Track A**: Phase 3（Pico＋カラー変数＋デモ見た目）
 2. **Track B**: Phase 4 前半（CLI 骨格・`add` 非上書き・`--force`）
 3. 合流後: **create テンプレ最終化**（Phase 4 後半）
-4. Phase 5: **移行ガイド ‖ Netlify**
+4. Phase 5: **移行ガイド ‖ Netlify CD（`preview-site`）**
+5. Phase 5〜6: **Netlify CD ‖ npm CD（`release`）**（シークレット準備後）
 
-一番おいしい並行は **「Phase 3 ‖ Phase 4 CLI 骨格」** と **「Phase 5 の文書 ‖ Netlify」**。
+一番おいしい並行は **「Phase 3 ‖ Phase 4 CLI 骨格」**、**「Phase 5 の文書 ‖ Netlify CD」**、**「Netlify CD ‖ npm CD」**。
 
 ### 並行してはいけないもの
 
@@ -130,32 +132,35 @@ Phase 6 v0.1.0 公開
 
 関連: [create-and-add.md](../cli/create-and-add.md)、[distribution.md](../architecture/distribution.md)、決定 1・3・6・12・15
 
-## Phase 5 — デモ・Netlify・移行ガイド
+## Phase 5 — デモ・Netlify CD・移行ガイド
 
-**エージェント**: 最大 3 セッション（5.1 → その後 5.2 ‖ 5.3）。
+**エージェント**: 最大 3〜4 セッション（5.1 → その後 5.2 ‖ 5.3 ‖ 5.4 の一部並行可）。
 
 | ID | タスク | 完了条件（目安） |
 | --- | --- | --- |
 | 5.1 | 本リポ内デモを `create` 相当の利用例として整える | module + 生成物 + Pico が見える |
-| 5.2 | Netlify preview を配線 | preview URL でデモが閲覧できる |
+| 5.2 | `preview-site` ブランチと Netlify CD を配線 | **`preview-site` へのマージで Netlify デプロイ**される（[cd.md](./cd.md)） |
 | 5.3 | `doc-site` → hermit-crumb 移行ガイド初版 | `docs/` 配下に初版がある（廃止操作はオーナー判断） |
+| 5.4 | （任意同時）Netlify 用シークレット／サイト設定の確認 | CD が認証付きで通る |
 
 5.1 完了後、**5.2 ‖ 5.3** を Multi task してよい。
 
-関連: [publishing.md](./publishing.md)、[migration.md](./migration.md)、決定 10・14
+関連: [publishing.md](./publishing.md)、[cd.md](./cd.md)、[migration.md](./migration.md)、決定 10・14・20
 
-## Phase 6 — v0.1.0 公開
+## Phase 6 — v0.1.0 公開（npm CD）
 
-**エージェント**: 1 セッション想定（権限・シークレットは人間側前提）。
+**エージェント**: 1〜2 セッション想定（権限・シークレットは人間側前提）。  
+npm CD 配線（6.0）は Phase 5 の Netlify CD と Multi task 可。
 
 | ID | タスク | 完了条件（目安） |
 | --- | --- | --- |
+| 6.0 | `release` ブランチ向け npm CD を配線 | **新タグ付きコミットの `release` マージで npm publish**される（[cd.md](./cd.md)） |
 | 6.1 | [publishing.md](./publishing.md) の v0.1.0 公開条件をチェック | 未達項目がゼロ |
 | 6.2 | `v0.1.0` タグを打つ | タグがリポジトリに存在する |
-| 6.3 | npmjs.org に `@b4moss/hermit-crumb@0.1.0` を公開 | `npm view` で確認できる |
+| 6.3 | タグ付きコミットを `release` へマージし、CD で公開 | `npm view @b4moss/hermit-crumb` で `0.1.0` を確認できる |
 | 6.4 | README／changelog を公開内容に合わせて最終化 | インストール手順が実パッケージと一致 |
 
-関連: 決定 9・11・18、[overview.md](../overview.md)
+関連: 決定 9・11・18・19、[overview.md](../overview.md)、[cd.md](./cd.md)
 
 ## ボリューム感（領域ベース）
 
@@ -166,10 +171,11 @@ Phase 6 v0.1.0 公開
 | 2 | module 境界の切り直し（設計が最も重い） |
 | 3 | CSS／コンポーネント見た目 |
 | 4 | CLI＋テンプレート一式（分割推奨） |
-| 5–6 | 配線・文書・公開手順 |
+| 5–6 | デモ・CD（`preview-site` / `release`）・文書・公開 |
 
 ## 関連文書
 
 - [overview.md](../overview.md) — v0.1.0 スコープ
 - [publishing.md](./publishing.md) — 公開条件
-- [decisions.md](../decisions.md) — 決定 1–18
+- [cd.md](./cd.md) — CD トリガー（`release` / `preview-site`）
+- [decisions.md](../decisions.md) — 決定 1–20
