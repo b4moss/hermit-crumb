@@ -61,3 +61,9 @@ hermit-crumb デフォルトトークン（module が提供）
 ## 関連決定
 
 - 決定 8, 13, 16, 17 — [decisions.md](../decisions.md)
+
+## 実装順
+
+- Phase 3。1 エージェント実装で閉じやすい
+- Phase 2 完了後、Phase 4 CLI 骨格と Multi task 可（create テンプレ見た目の確定は本 Phase 後）
+- 詳細: [delivery/roadmap.md](../delivery/roadmap.md)
