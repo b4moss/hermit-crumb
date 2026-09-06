@@ -1,9 +1,12 @@
-# Netlify builds the monorepo playground (create-equivalent demo).
-# Production branch must be `preview-site` (see docs/publishing.md).
+# Netlify publishes the playground from GitHub Actions
+# (`.github/workflows/doc-site.yml`) after playground tests pass.
+# Skip automatic Git-triggered builds to avoid duplicate deploys.
+# Disable auto builds in the Netlify UI as well if still enabled.
 
 [build]
-  command = "npm ci && npm run generate:playground"
+  command = "npm ci && npm run typecheck:playground && npm run generate:playground"
   publish = "playground/.output/public"
+  ignore = "exit 1"
 
 [build.environment]
   NODE_VERSION = "22.19"

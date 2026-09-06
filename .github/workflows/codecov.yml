@@ -1,0 +1,46 @@
+# Codecov upload — runs only on pushes to main (badge later).
+# Requires repository secret CODECOV_TOKEN when enabling the badge.
+
+name: Codecov
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: codecov-main
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  coverage:
+    name: unit coverage → Codecov
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup-node-npm
+
+      - name: Run tests with coverage
+        working-directory: packages/hermit-crumb
+        run: |
+          set -euo pipefail
+          mkdir -p coverage
+          node --test --experimental-test-coverage \
+            --test-reporter=spec \
+            --test-reporter=lcov \
+            --test-reporter-destination=stdout \
+            --test-reporter-destination=coverage/lcov.info \
+            test/**/*.test.mjs
+
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          files: packages/hermit-crumb/coverage/lcov.info
+          fail_ci_if_error: false
+          token: ${{ secrets.CODECOV_TOKEN }}
