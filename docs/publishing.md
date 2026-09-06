@@ -72,12 +72,12 @@ No Netlify token in GitHub Actions — production branch in the Netlify UI must 
 
 | Workflow | When | Notes |
 | --- | --- | --- |
-| [`.github/workflows/codecov.yml`](../.github/workflows/codecov.yml) | Push to `main` | Uploads Node test coverage. Secret: `CODECOV_TOKEN` (upload is non-blocking without it). |
+| [`.github/workflows/codecov.yml`](../.github/workflows/codecov.yml) | Push to `main` | Uploads Node test coverage. Uses org secret `CODECOV_TOKEN`. |
 | [`.github/workflows/scorecard.yml`](../.github/workflows/scorecard.yml) | Push to `main` | OpenSSF Scorecard → code scanning SARIF. |
 
 ## Secrets checklist
 
-| Secret | Used by |
-| --- | --- |
-| `NPM_TOKEN` | npm publish |
-| `CODECOV_TOKEN` | Codecov (optional until badge is enabled) |
+| Secret | Scope | Used by |
+| --- | --- | --- |
+| `NPM_TOKEN` | repo (or org) | npm publish |
+| `CODECOV_TOKEN` | organization | Codecov upload on `main` |
