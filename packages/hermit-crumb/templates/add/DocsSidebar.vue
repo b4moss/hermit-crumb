@@ -206,13 +206,18 @@ function onToggle(parentKey: string, event: Event) {
   gap: 0.15rem;
 }
 
+/*
+  Shared padded row: label + toggle share one flex line box.
+  Avoid stretch + separate paddings (that made the chevron look high).
+*/
 .sidebar-parent {
   display: flex;
-  align-items: stretch;
-  gap: 0;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.45rem 0.35rem 0.45rem 0.7rem;
   border-radius: 0.35rem;
   color: var(--color-muted);
-  line-height: 1.4;
+  line-height: 1.25;
 }
 
 .sidebar-parent:hover {
@@ -233,20 +238,18 @@ function onToggle(parentKey: string, event: Event) {
   text-decoration: none;
   font-size: 0.9375rem;
   font-weight: 500;
-  line-height: 1.4;
+  line-height: 1.25;
 }
 
 .sidebar-link--parent {
   flex: 1;
   min-width: 0;
-  display: flex;
-  align-items: center;
-  padding: 0.45rem 0.5rem 0.45rem 0.7rem;
+  padding: 0;
   border-radius: 0;
   color: inherit;
   background: transparent;
   font-weight: inherit;
-  line-height: 1.4;
+  line-height: inherit;
 }
 
 .sidebar-parent--active .sidebar-link--parent {
@@ -276,13 +279,13 @@ function onToggle(parentKey: string, event: Event) {
 }
 
 .sidebar-toggle {
-  /* Reset Pico button chrome; stretch to parent row and center the SVG. */
+  /* Reset Pico button styles; fixed square hit target on the shared row. */
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  align-self: stretch;
-  width: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
   margin: 0;
   padding: 0;
   border: 0;
@@ -308,18 +311,17 @@ function onToggle(parentKey: string, event: Event) {
 
 .sidebar-chevron {
   display: block;
-  width: 0.75rem;
-  height: 0.75rem;
+  width: 0.7rem;
+  height: 0.7rem;
   flex-shrink: 0;
   opacity: 0.75;
-  /* Path chevrons optically sit high vs Latin text; keep a clear downward bias. */
-  transform: translateY(5px);
+  transform: rotate(0deg);
   transform-origin: 50% 50%;
   transition: transform 0.15s ease;
 }
 
 .sidebar-group[data-open="true"] .sidebar-chevron {
-  transform: translateY(5px) rotate(180deg);
+  transform: rotate(180deg);
 }
 
 .sidebar-children {
