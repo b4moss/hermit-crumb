@@ -26,27 +26,27 @@
 #   software.programmingLanguage  → 文字列の配列（空 [] なら JSON-LD に出さない）
 #
 # ページ役割（TechArticle / FAQPage / HowTo）は各 Markdown の schemaRole 側。
-# FAQ の Q/A は本文の ::faq-item。詳細は content/ja/overview.md や faq.md のコメントへ。
+# FAQ の Q/A は本文の ::faq-item。詳細は content/*/json-ld.md と faq.md へ。
 # =============================================================================
 
-siteName: Doc Site
+siteName: hermit-crumb
 siteUrl: https://example.com
-siteVersion: "0.9.0"
-description: Nuxt Content documentation site scaffold
-githubUrl: https://github.com/b4moss/git-template
+siteVersion: "0.2.0"
+description: Nuxt v4 tech documentation site shell
+githubUrl: https://github.com/b4moss/hermit-crumb
 # ヘッダー右端の npm アイコン。空 / 未設定なら非表示。
-npmUrl: ""
+npmUrl: "https://www.npmjs.com/package/@b4moss/hermit-crumb"
 footerText: "MIT License · 2026 Bicycle for Mind LLC."
 
 software:
   # → SoftwareSourceCode.name（省略時は siteName）
-  name: Doc Site
+  name: hermit-crumb
   # → SoftwareSourceCode.codeRepository（省略時は githubUrl）
-  codeRepository: https://github.com/b4moss/git-template
+  codeRepository: https://github.com/b4moss/hermit-crumb
   # → SoftwareSourceCode.license
   license: MIT
   # → SoftwareSourceCode.programmingLanguage（例: [ TypeScript, Vue ]）
-  programmingLanguage: []
+  programmingLanguage: [TypeScript, Vue]
 
 # -----------------------------------------------------------------------------
 # 自社情報（Organization）— 全ページ共通

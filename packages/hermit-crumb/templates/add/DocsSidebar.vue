@@ -71,6 +71,13 @@ function isGroup(entry: NavItem | NavGroup): entry is NavGroup {
   return "children" in entry;
 }
 
+function onParentClick(parentKey: string) {
+  if (expandable) {
+    toggle(parentKey);
+  }
+  close();
+}
+
 function onToggle(parentKey: string, event: Event) {
   event.preventDefault();
   event.stopPropagation();
@@ -84,12 +91,15 @@ function onToggle(parentKey: string, event: Event) {
       <template v-for="entry in groups" :key="isGroup(entry) ? entry.parent.key : entry.key">
         <template v-if="isGroup(entry)">
           <div class="sidebar-group" :data-open="isOpen(entry.parent.key) ? 'true' : 'false'">
-            <div class="sidebar-parent">
+            <div
+              class="sidebar-parent"
+              :class="{ 'sidebar-parent--active': isActive(entry.parent) }"
+            >
               <NuxtLink
                 :to="entry.parent.to"
                 class="sidebar-link sidebar-link--parent"
                 :class="{ 'router-link-exact-active': isActive(entry.parent) }"
-                @click="close"
+                @click="onParentClick(entry.parent.key)"
               >
                 {{ entry.parent.label }}
               </NuxtLink>
@@ -102,7 +112,21 @@ function onToggle(parentKey: string, event: Event) {
                 :aria-label="entry.parent.label"
                 @click="onToggle(entry.parent.key, $event)"
               >
-                <span class="sidebar-chevron" aria-hidden="true" />
+                <svg
+                  class="sidebar-chevron"
+                  viewBox="0 0 12 12"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path
+                    d="M3 4.5 L6 7.5 L9 4.5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
               </button>
             </div>
             <div
@@ -182,10 +206,28 @@ function onToggle(parentKey: string, event: Event) {
   gap: 0.15rem;
 }
 
+/*
+  Shared padded row: label + toggle share one flex line box.
+  Avoid stretch + separate paddings (that made the chevron look high).
+*/
 .sidebar-parent {
   display: flex;
   align-items: center;
   gap: 0.15rem;
+  padding: 0.45rem 0.35rem 0.45rem 0.7rem;
+  border-radius: 0.35rem;
+  color: var(--color-muted);
+  line-height: 1.25;
+}
+
+.sidebar-parent:hover {
+  color: var(--color-ink);
+  background: var(--color-accent-soft);
+}
+
+.sidebar-parent--active {
+  color: var(--color-accent);
+  background: var(--color-accent-soft);
 }
 
 .sidebar-link {
@@ -196,16 +238,32 @@ function onToggle(parentKey: string, event: Event) {
   text-decoration: none;
   font-size: 0.9375rem;
   font-weight: 500;
+  line-height: 1.25;
 }
 
 .sidebar-link--parent {
   flex: 1;
   min-width: 0;
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
+  background: transparent;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+.sidebar-parent--active .sidebar-link--parent {
+  font-weight: 600;
 }
 
 .sidebar-link:hover {
   color: var(--color-ink);
   background: var(--color-accent-soft);
+}
+
+.sidebar-link--parent:hover {
+  color: inherit;
+  background: transparent;
 }
 
 .sidebar-link--child {
@@ -221,37 +279,49 @@ function onToggle(parentKey: string, event: Event) {
 }
 
 .sidebar-toggle {
+  /* Reset Pico button styles; fixed square hit target on the shared row. */
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 1.85rem;
-  height: 1.85rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0;
+  padding: 0;
   border: 0;
   border-radius: 0.3rem;
   background: transparent;
-  color: var(--color-muted);
+  color: inherit;
   cursor: pointer;
-  padding: 0;
+  line-height: 0;
+  font-size: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+  box-shadow: none;
 }
 
 .sidebar-toggle:hover {
   color: var(--color-ink);
-  background: var(--color-accent-soft);
+  background: transparent;
+}
+
+.sidebar-parent:hover .sidebar-toggle {
+  color: var(--color-ink);
 }
 
 .sidebar-chevron {
-  width: 0.4rem;
-  height: 0.4rem;
-  border-right: 1.5px solid currentColor;
-  border-bottom: 1.5px solid currentColor;
-  transform: rotate(45deg);
-  transition: transform 0.15s ease;
+  display: block;
+  width: 0.7rem;
+  height: 0.7rem;
+  flex-shrink: 0;
   opacity: 0.75;
+  transform: rotate(0deg);
+  transform-origin: 50% 50%;
+  transition: transform 0.15s ease;
 }
 
 .sidebar-group[data-open="true"] .sidebar-chevron {
-  transform: translateY(1px) rotate(-135deg);
+  transform: rotate(180deg);
 }
 
 .sidebar-children {

@@ -26,7 +26,7 @@
 #   software.programmingLanguage  → 文字列の配列（空 [] なら JSON-LD に出さない）
 #
 # ページ役割（TechArticle / FAQPage / HowTo）は各 Markdown の schemaRole 側。
-# FAQ の Q/A は本文の ::faq-item。詳細は content/ja/overview.md や faq.md のコメントへ。
+# FAQ の Q/A は本文の ::faq-item。詳細は content/*/json-ld.md と faq.md へ。
 # =============================================================================
 
 siteName: Doc Site

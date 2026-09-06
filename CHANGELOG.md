@@ -2,6 +2,20 @@
 
 All notable changes to `@b4moss/hermit-crumb` are documented in this file.
 
+## [Unreleased]
+
+### Added
+
+- Local CI rehearsal with [nektos/act](https://github.com/nektos/act) (`.actrc`, `docs/act.md`, `npm run act:ci`); run before every PR — manual only, not automated
+
+### Fixed
+
+- Quote-safe CI step name so `act` can parse `.github/workflows/ci.yml` (`file: link` → `file link`)
+
+### Changed
+
+- Node.js requirement raised to `>= 24.20` (dev + GitHub Actions + Netlify pin `24.20`)
+
 ## [0.1.0] — 2026-09-05
 
 初回公開。

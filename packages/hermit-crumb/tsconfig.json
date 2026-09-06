@@ -11,6 +11,6 @@
     "rootDir": "./src",
     "outDir": "./dist"
   },
-  "include": ["src/**/*"],
-  "exclude": ["dist", "node_modules", "src/runtime/**"]
+  "include": ["src/module.ts", "src/loadSiteMeta.ts"],
+  "exclude": ["dist", "node_modules", "src/runtime"]
 }

@@ -34,7 +34,7 @@ export default defineNuxtConfig({
 })
 ```
 
-Requires **Node.js >= 22.19**.
+Requires **Node.js >= 24.20**.
 
 ## Repository layout
 
@@ -42,11 +42,13 @@ Requires **Node.js >= 22.19**.
 | --- | --- |
 | [`packages/hermit-crumb`](./packages/hermit-crumb) | Published package (module + CLI) |
 | [`playground`](./playground) | Demo site (create-equivalent; Netlify target) |
-| [`docs`](./docs/README.md) | Documentation index |
+| [`docs`](./docs/README.md) | Documentation index (incl. [test specs](./docs/tests/README.md)) |
+| [`charter`](./charter/README.md) | Dev charter submodule (`b4moss/charter` `docs` branch) |
 
 ## Develop this monorepo
 
 ```shell
+git submodule update --init --recursive
 npm install
 npm run lint
 npm run typecheck
@@ -56,6 +58,13 @@ npm run generate:playground
 npm run dev:playground
 ```
 
+Before opening a PR, run the CI workflow locally with [act](./docs/act.md) (Docker required; manual step, not automated):
+
+```shell
+npm run act:ci
+# or: act pull_request -e .github/act/pull_request.json
+```
+
 ## Docs
 
-See [`docs/README.md`](./docs/README.md) for usage, module API, theming, `site.meta.yaml`, publishing, and migration.
+See [`docs/README.md`](./docs/README.md) for usage, module API, theming, `site.meta.yaml`, publishing, local CI (`act`), and migration.
