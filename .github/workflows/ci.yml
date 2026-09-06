@@ -1,52 +1,174 @@
+# Unit + integration CI for the published package (playground excluded).
+# - PRs into develop / dev-*: always run (unless docs-only)
+# - Pushes to main / develop / release: run, but skip if this SHA already passed CI
+# - Docs-only changes: skip tests
+
 name: CI
 
 on:
+  pull_request:
+    branches:
+      - develop
+      - "dev-*"
   push:
     branches:
       - main
       - develop
-      - dev-v0.1.0
-      - release
-      - 'cursor/**'
-  pull_request:
-    branches:
-      - main
-      - develop
-      - dev-v0.1.0
       - release
 
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  actions: read
+
 jobs:
-  check:
-    name: lint / typecheck / build / test / smoke / generate
+  gate:
+    name: gate (docs / prior success)
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 5
+    outputs:
+      run_tests: ${{ steps.decide.outputs.run_tests }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
         with:
-          node-version: "22.19"
-          cache: npm
+          fetch-depth: 0
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Decide whether to run tests
+        id: decide
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BEFORE: ${{ github.event.before }}
+          SHA: ${{ github.sha }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
 
+          docs_only=true
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            BASE="$PR_BASE"
+            HEAD="$PR_HEAD"
+          else
+            BASE="$BEFORE"
+            HEAD="$SHA"
+          fi
+
+          if [ -z "${BASE:-}" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then
+            echo "No usable base SHA — treat as code change"
+            docs_only=false
+          else
+            echo "Diff $BASE...$HEAD"
+            while IFS= read -r file; do
+              [ -z "$file" ] && continue
+              echo "  $file"
+              case "$file" in
+                docs/*|README.md|CHANGELOG.md|LICENSE|packages/hermit-crumb/README.md|playground/README.md)
+                  ;;
+                *)
+                  docs_only=false
+                  ;;
+              esac
+            done < <(git diff --name-only "$BASE" "$HEAD")
+          fi
+
+          if [ "$docs_only" = "true" ]; then
+            echo "Docs-only change — skip CI tests"
+            echo "run_tests=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if [ "$EVENT_NAME" = "push" ]; then
+            count="$(gh api "repos/${REPO}/actions/runs?head_sha=${SHA}&status=completed&per_page=100" \
+              --jq "[.workflow_runs[] | select(.name == \"CI\" and .conclusion == \"success\" and (.id | tostring) != \"${RUN_ID}\")] | length")"
+            if [ "${count:-0}" -gt 0 ]; then
+              echo "CI already succeeded for $SHA ($count prior run(s)) — skip"
+              echo "run_tests=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          fi
+
+          echo "run_tests=true" >> "$GITHUB_OUTPUT"
+
+  lint:
+    name: lint
+    needs: gate
+    if: needs.gate.outputs.run_tests == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-node-npm
       - name: Lint
         run: npm run lint
 
-      - name: Typecheck package
-        run: npm run typecheck
-
-      - name: Build package
-        run: npm run build
-
-      - name: Test package
+  test:
+    name: test (unit + integration)
+    needs: gate
+    if: needs.gate.outputs.run_tests == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-node-npm
+      - name: Test
         run: npm run test
 
-      - name: Smoke create (file: link + nuxt prepare)
+  build:
+    name: typecheck / build
+    needs: gate
+    if: needs.gate.outputs.run_tests == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-node-npm
+      - name: Typecheck / build
+        run: npm run typecheck
+
+  smoke:
+    name: smoke create
+    needs: gate
+    if: needs.gate.outputs.run_tests == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-node-npm
+      - name: Smoke create
         run: npm run smoke:create
 
-      - name: Generate playground
-        run: npm run generate:playground
+  ci:
+    name: CI result
+    needs: [gate, lint, test, build, smoke]
+    if: always() && needs.gate.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Aggregate
+        env:
+          RUN_TESTS: ${{ needs.gate.outputs.run_tests }}
+          LINT: ${{ needs.lint.result }}
+          TEST: ${{ needs.test.result }}
+          BUILD: ${{ needs.build.result }}
+          SMOKE: ${{ needs.smoke.result }}
+        run: |
+          set -euo pipefail
+          if [ "$RUN_TESTS" != "true" ]; then
+            echo "Skipped (docs-only or prior successful CI for this SHA)"
+            exit 0
+          fi
+          echo "lint=$LINT test=$TEST build=$BUILD smoke=$SMOKE"
+          for result in "$LINT" "$TEST" "$BUILD" "$SMOKE"; do
+            if [ "$result" != "success" ]; then
+              echo "CI failed"
+              exit 1
+            fi
+          done
+          echo "CI passed"

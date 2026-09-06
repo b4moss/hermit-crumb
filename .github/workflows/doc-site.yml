@@ -1,0 +1,33 @@
+# Doc site (playground) checks for PRs into `preview-site`.
+# Deploy itself is Netlify Git integration on merge to `preview-site`
+# (see netlify.toml) — no Netlify token in GitHub Actions.
+
+name: Doc site
+
+on:
+  pull_request:
+    branches:
+      - preview-site
+
+concurrency:
+  group: doc-site-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  playground:
+    name: playground typecheck + generate
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup-node-npm
+
+      - name: Typecheck playground
+        run: npm run typecheck:playground
+
+      - name: Generate playground
+        run: npm run generate:playground
