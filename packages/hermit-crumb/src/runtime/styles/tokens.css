@@ -16,6 +16,9 @@
   --pico-font-family-monospace: "IBM Plex Mono", "SFMono-Regular", ui-monospace,
     monospace, var(--pico-font-family-emoji);
   --pico-font-family: var(--pico-font-family-sans-serif);
+  /* Pin base size: Pico scales html up to 131.25% by viewport (docs feel large).
+     Keep ~16px like pre-Pico reference sites (e.g. bwsf). */
+  --pico-font-size: 100%;
 
   --pico-primary: #0f6e56;
   --pico-primary-background: #0f6e56;
@@ -83,4 +86,40 @@ html.dark {
   --color-bg-glow-2: #152030;
 
   accent-color: var(--color-accent);
+}
+
+/* Re-assert after Pico’s responsive typography media queries (same :root/:host). */
+@media (min-width: 576px) {
+  :root,
+  :host {
+    --pico-font-size: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  :root,
+  :host {
+    --pico-font-size: 100%;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root,
+  :host {
+    --pico-font-size: 100%;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root,
+  :host {
+    --pico-font-size: 100%;
+  }
+}
+
+@media (min-width: 1536px) {
+  :root,
+  :host {
+    --pico-font-size: 100%;
+  }
 }
