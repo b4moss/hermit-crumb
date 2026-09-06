@@ -57,12 +57,17 @@ const { t } = useI18n();
 
 <style scoped>
 .docs-toc {
+  /* Override Pico `nav` flex row / centered items. */
   display: none;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  text-align: left;
 }
 
 @media (min-width: 1100px) {
   .docs-toc {
-    display: block;
+    display: flex;
     position: sticky;
     top: var(--header-height);
     flex-shrink: 0;
@@ -81,6 +86,7 @@ const { t } = useI18n();
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  text-align: left;
   color: var(--color-muted);
 }
 
@@ -90,15 +96,30 @@ const { t } = useI18n();
   padding: 0;
   display: flex;
   flex-direction: column;
+  align-items: stretch;
   gap: 0.1rem;
+}
+
+.docs-toc__list:first-of-type,
+.docs-toc__list:last-of-type {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.docs-toc__item {
+  display: block;
+  margin: 0;
+  padding: 0;
 }
 
 .docs-toc__link {
   display: block;
+  width: 100%;
+  box-sizing: border-box;
   padding: 0.25rem 0.4rem;
   border-radius: 0.3rem;
-  border-left: 2px solid transparent;
   color: var(--color-muted);
+  text-align: left;
   text-decoration: none;
   font-size: 0.85rem;
   line-height: 1.35;
@@ -135,7 +156,6 @@ const { t } = useI18n();
 
 .docs-toc__link--active {
   color: var(--color-accent);
-  border-left-color: var(--color-accent);
   font-weight: 600;
 }
 </style>
