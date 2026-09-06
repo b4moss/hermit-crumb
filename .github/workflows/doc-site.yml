@@ -1,17 +1,11 @@
-# Doc site (playground) CD for the `preview-site` branch (formerly doc-site).
-# - PR or merge: run playground typecheck + generate
-# - Merge (push) only: deploy to Netlify after tests pass
-#
-# Avoids duplicate Netlify Git builds via netlify.toml [build].ignore.
-# Secrets: NETLIFY_AUTH_TOKEN, NETLIFY_SITE_ID
+# Doc site (playground) checks for PRs into `preview-site`.
+# Deploy itself is Netlify Git integration on merge to `preview-site`
+# (see netlify.toml) — no Netlify token in GitHub Actions.
 
 name: Doc site
 
 on:
   pull_request:
-    branches:
-      - preview-site
-  push:
     branches:
       - preview-site
 
@@ -37,31 +31,3 @@ jobs:
 
       - name: Generate playground
         run: npm run generate:playground
-
-      - name: Upload site artifact
-        if: github.event_name == 'push'
-        uses: actions/upload-artifact@v4
-        with:
-          name: playground-site
-          path: playground/.output/public
-          if-no-files-found: error
-          retention-days: 3
-
-  deploy:
-    name: deploy Netlify
-    needs: playground
-    if: github.event_name == 'push' && github.ref == 'refs/heads/preview-site'
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Download site artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: playground-site
-          path: site
-
-      - name: Deploy to Netlify
-        run: npx --yes netlify-cli deploy --prod --dir=site --message "doc-site ${GITHUB_SHA}"
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

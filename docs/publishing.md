@@ -7,7 +7,7 @@
 | `develop` / `dev-*` | Integration. PRs here always run package CI (unit + integration). |
 | `main` | Stable line. CI on push (skipped if the SHA already passed). Codecov + OpenSSF Scorecard on push. |
 | `release` | npm CD. Tagged commit with matching `package.json` version → publish. |
-| `preview-site` | Doc site (playground) CD. Playground tests, then Netlify deploy. |
+| `preview-site` | Doc site (playground) CD. PR checks in Actions; Netlify deploys on merge. |
 
 ## CI (package)
 
@@ -54,21 +54,17 @@ Secret: `NPM_TOKEN` (publish access for `@b4moss`).
 
 ## CD — doc site / playground (Netlify)
 
-Workflow: [`.github/workflows/doc-site.yml`](../.github/workflows/doc-site.yml).  
-Config reference: [`netlify.toml`](../netlify.toml).
-
-| Trigger | Behavior |
+| Step | Where |
 | --- | --- |
-| PR → `preview-site` | `typecheck:playground` + `generate:playground` |
-| Push → `preview-site` | Same tests, then **Netlify production deploy** |
+| PR → `preview-site` | [`.github/workflows/doc-site.yml`](../.github/workflows/doc-site.yml) runs `typecheck:playground` + `generate:playground` |
+| Merge → `preview-site` | Netlify Git integration builds and deploys ([`netlify.toml`](../netlify.toml); build also runs typecheck + generate) |
 
-Git-triggered Netlify builds are ignored (`[build].ignore`) so deploy runs only from Actions after tests pass.
-
-Secrets: `NETLIFY_AUTH_TOKEN`, `NETLIFY_SITE_ID`.
+No Netlify token in GitHub Actions — production branch in the Netlify UI must be `preview-site`.
 
 | Setting | Value |
 | --- | --- |
 | Production branch | `preview-site` |
+| Build | `npm ci && npm run typecheck:playground && npm run generate:playground` |
 | Publish directory | `playground/.output/public` |
 | Node | `.nvmrc` (`22.19`) |
 
@@ -84,6 +80,4 @@ Secrets: `NETLIFY_AUTH_TOKEN`, `NETLIFY_SITE_ID`.
 | Secret | Used by |
 | --- | --- |
 | `NPM_TOKEN` | npm publish |
-| `NETLIFY_AUTH_TOKEN` | doc-site deploy |
-| `NETLIFY_SITE_ID` | doc-site deploy |
 | `CODECOV_TOKEN` | Codecov (optional until badge is enabled) |
