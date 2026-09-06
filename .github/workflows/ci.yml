@@ -45,7 +45,7 @@ jobs:
       - name: Test package
         run: npm run test
 
-      - name: Smoke create (file: link + nuxt prepare)
+      - name: Smoke create (file link + nuxt prepare)
         run: npm run smoke:create
 
       - name: Generate playground

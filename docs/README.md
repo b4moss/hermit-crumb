@@ -11,6 +11,7 @@ Product hub: [`main.md`](./main.md). Charter: submodule [`../charter`](../charte
 | [theming.md](./theming.md) | Pico.css and CSS variables |
 | [site-meta.md](./site-meta.md) | `site.meta.yaml` |
 | [publishing.md](./publishing.md) | npm (`release`) and Netlify (`preview-site`) |
+| [act.md](./act.md) | Local CI with `act` (run before every PR) |
 | [migration.md](./migration.md) | Moving from `git-template` `doc-site` |
 | [tests/](./tests/README.md) | Test specifications (TDD input; Vitest in #25) |
 | [override-charter.md](./override-charter.md) | Project overrides of the charter |

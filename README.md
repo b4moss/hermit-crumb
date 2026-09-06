@@ -58,6 +58,13 @@ npm run generate:playground
 npm run dev:playground
 ```
 
+Before opening a PR, run the CI workflow locally with [act](./docs/act.md) (Docker required; manual step, not automated):
+
+```shell
+npm run act:ci
+# or: act pull_request -e .github/act/pull_request.json
+```
+
 ## Docs
 
-See [`docs/README.md`](./docs/README.md) for usage, module API, theming, `site.meta.yaml`, publishing, and migration.
+See [`docs/README.md`](./docs/README.md) for usage, module API, theming, `site.meta.yaml`, publishing, local CI (`act`), and migration.
