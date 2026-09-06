@@ -29,7 +29,7 @@ Publish when **all** are true:
 
 1. A **`v*`** tag exists (e.g. `v0.1.0`) and matches `packages/hermit-crumb/package.json`
 2. That tagged commit is on branch **`release`**
-3. The version is not already on npm
+3. The version is not already on npm (if it is, the job succeeds as a no-op)
 
 ### Release flow
 
