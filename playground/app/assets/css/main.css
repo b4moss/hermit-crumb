@@ -73,9 +73,15 @@ main pre code {
   width: 100%;
 }
 
-.docs-content-row .site-main {
+.docs-content-row .site-main,
+.docs-content-primary {
   flex: 1;
   min-width: 0;
+}
+
+.site-main--docs {
+  width: min(100% - 2rem, calc(var(--hc-max-width, var(--max-width)) + var(--toc-width, var(--hc-toc-width, 14rem)) + 2rem));
+  max-width: none;
 }
 
 .prose :where(h1, h2, h3, h4, h5, h6) {

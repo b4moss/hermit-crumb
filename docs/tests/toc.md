@@ -109,7 +109,8 @@ TOC（目次）とスクロールスパイ。Issue **#36**。
 
 ### layouts（docs / default）とページ接続
 
-- `layouts/docs.vue`: `SiteHeader` + `DocsSidebar` + main slot + `DocsToc` + `SiteFooter`（右 TOC は PC 想定）
+- `layouts/docs.vue`: `SiteHeader` + `DocsSidebar` + main slot + `SiteFooter`
+- ドキュメントページ（`[...slug].vue`）内に `DocsToc` をデフォルト配置（右 TOC は PC 想定）
 - `layouts/default.vue`: `SiteHeader` + main + `SiteFooter`（Sidebar / TOC なし）
 - `pages/[...slug].vue`: `definePageMeta({ layout: "docs" })` を既定とし、toc を layout / DocsToc へ提供する
 
@@ -118,7 +119,8 @@ TOC（目次）とスクロールスパイ。Issue **#36**。
 - create 成果物に `app/layouts/docs.vue` と `app/layouts/default.vue` が含まれる
 - create 成果物の `[...slug].vue` が docs レイアウトを指定している
 - create / add で `app/components/DocsToc.vue` が生成される
-- docs レイアウト文言・タグに `DocsToc` / `DocsSidebar` が含まれる（スキャフォールド文字列アサーションで可）
+- docs レイアウトに `DocsSidebar` が含まれる（スキャフォールド文字列アサーションで可）
+- ドキュメントページに `DocsToc` が含まれる
 - default レイアウトに `DocsSidebar` / `DocsToc` が含まれない
 
 #### テスト: 異常系

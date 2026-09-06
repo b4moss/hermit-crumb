@@ -65,8 +65,8 @@ describe("createProject", () => {
       join(targetDir, "app/layouts/docs.vue"),
       "utf8",
     );
-    assert.match(docsLayout, /DocsToc/);
     assert.match(docsLayout, /DocsSidebar/);
+    assert.doesNotMatch(docsLayout, /DocsToc/);
     const defaultLayout = await readFile(
       join(targetDir, "app/layouts/default.vue"),
       "utf8",
@@ -78,6 +78,7 @@ describe("createProject", () => {
       "utf8",
     );
     assert.match(slugPage, /layout:\s*["']docs["']/);
+    assert.match(slugPage, /DocsToc/);
 
     const readme = await readFile(join(targetDir, "README.md"), "utf8");
     assert.match(readme, /acme-docs/);

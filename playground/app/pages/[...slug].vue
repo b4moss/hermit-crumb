@@ -94,32 +94,25 @@ const faqItems = computed<FaqQa[]>(() => {
   return extractFaqFromBody(page.value.body);
 });
 
-watch(
-  page,
-  (value) => {
-    setDocsTocLinks(extractTocLinksFromPage(value));
-  },
-  { immediate: true },
-);
-
-onBeforeUnmount(() => {
-  setDocsTocLinks([]);
-});
+const tocLinks = computed(() => extractTocLinksFromPage(page.value));
 </script>
 
 <template>
-  <div>
-    <article class="prose">
-      <ContentRenderer v-if="page" :value="page" />
-    </article>
-    <DocsJsonLd
-      :page-url="pageUrl"
-      :title="pageTitle"
-      :description="page?.description || undefined"
-      :schema-role="schemaRole"
-      :json-ld="jsonLd"
-      :faq-items="faqItems"
-    />
-    <DocsPager />
+  <div class="docs-content-row">
+    <div class="docs-content-primary">
+      <article class="prose">
+        <ContentRenderer v-if="page" :value="page" />
+      </article>
+      <DocsJsonLd
+        :page-url="pageUrl"
+        :title="pageTitle"
+        :description="page?.description || undefined"
+        :schema-role="schemaRole"
+        :json-ld="jsonLd"
+        :faq-items="faqItems"
+      />
+      <DocsPager />
+    </div>
+    <DocsToc :links="tocLinks" />
   </div>
 </template>

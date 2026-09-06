@@ -9,14 +9,6 @@ import {
 } from "../utils/toc";
 
 export type { TocLink };
-export {
-  DOCS_TOC_LINKS_STATE_KEY,
-  extractTocLinksFromPage,
-  filterTocLinks,
-  flattenTocLinks,
-  normalizeTocDepth,
-  resolveActiveTocId,
-} from "../utils/toc";
 
 export type UseDocsTocOptions = {
   /** Max heading depth (1–6). Default 3. */
