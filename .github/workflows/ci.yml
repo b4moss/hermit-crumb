@@ -1,52 +1,103 @@
+# Package CI (playground excluded).
+# - PR → develop / dev-*: lint → typecheck → test → smoke (one job, one npm ci)
+# - Docs-only changes: skip heavy steps
+# - Same head SHA already green: skip heavy steps
+# Local pre-PR: use act when available (see docs/publishing.md)
+
 name: CI
 
 on:
-  push:
-    branches:
-      - main
-      - develop
-      - dev-v0.1.0
-      - release
-      - 'cursor/**'
   pull_request:
     branches:
-      - main
       - develop
-      - dev-v0.1.0
-      - release
+      - "dev-*"
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  actions: read
 
 jobs:
-  check:
-    name: lint / typecheck / build / test / smoke / generate
+  ci:
+    name: CI
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
         with:
           node-version: "24.20"
           cache: npm
 
-      - name: Install dependencies
-        run: npm ci
+          docs_only=true
+          BASE="$PR_BASE"
+          HEAD="$PR_HEAD"
+
+          if [ -z "${BASE:-}" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then
+            echo "No usable base SHA — treat as code change"
+            docs_only=false
+          else
+            echo "Diff $BASE...$HEAD"
+            while IFS= read -r file; do
+              [ -z "$file" ] && continue
+              echo "  $file"
+              case "$file" in
+                docs/*|README.md|CHANGELOG.md|LICENSE|packages/hermit-crumb/README.md|playground/README.md)
+                  ;;
+                *)
+                  docs_only=false
+                  ;;
+              esac
+            done < <(git diff --name-only "$BASE" "$HEAD")
+          fi
+
+          if [ "$docs_only" = "true" ]; then
+            echo "Docs-only change — skip CI checks"
+            echo "run_checks=false" >> "$GITHUB_OUTPUT"
+            echo "reason=docs-only" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          count="$(gh api "repos/${REPO}/actions/runs?head_sha=${HEAD}&status=completed&per_page=100" \
+            --jq "[.workflow_runs[] | select(.name == \"CI\" and .conclusion == \"success\" and (.id | tostring) != \"${RUN_ID}\")] | length")"
+          if [ "${count:-0}" -gt 0 ]; then
+            echo "CI already succeeded for $HEAD ($count prior run(s)) — skip"
+            echo "run_checks=false" >> "$GITHUB_OUTPUT"
+            echo "reason=sha-already-green" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "run_checks=true" >> "$GITHUB_OUTPUT"
+          echo "reason=full" >> "$GITHUB_OUTPUT"
+
+      - name: Setup Node.js and install
+        if: steps.decide.outputs.run_checks == 'true'
+        uses: ./.github/actions/setup-node-npm
 
       - name: Lint
+        if: steps.decide.outputs.run_checks == 'true'
         run: npm run lint
 
-      - name: Typecheck package
+      - name: Typecheck / build
+        if: steps.decide.outputs.run_checks == 'true'
         run: npm run typecheck
 
-      - name: Build package
-        run: npm run build
-
-      - name: Test package
+      - name: Test (unit + integration)
+        if: steps.decide.outputs.run_checks == 'true'
         run: npm run test
 
       - name: Smoke create (file link + nuxt prepare)
         run: npm run smoke:create
 
-      - name: Generate playground
-        run: npm run generate:playground
+      - name: Summary
+        run: |
+          set -euo pipefail
+          echo "run_checks=${{ steps.decide.outputs.run_checks }} reason=${{ steps.decide.outputs.reason }}"
+          if [ "${{ steps.decide.outputs.run_checks }}" != "true" ]; then
+            echo "Skipped heavy checks (${{ steps.decide.outputs.reason }})"
+          else
+            echo "CI checks completed"
+          fi
