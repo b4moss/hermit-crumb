@@ -1,48 +1,51 @@
 ---
 # @graph: WebPage + WebSite + TechArticle + SoftwareSourceCode
-# Write in: site.meta.yaml (shared) / schemaRole: TechArticle / title・description
-# See: docs/jsonld.md (full: docs/jsonld_ja.md)
 title: Getting started
-description: How to use this documentation site scaffold
+description: Shortest path to a hermit-crumb documentation site
 schemaRole: TechArticle
 ---
 
 # Getting started
 
-## Dev server
+The shortest path is the `create` CLI. Generated files belong to your project (package updates do not rewrite them).
+
+## Create a site
 
 ```bash
+npx @b4moss/hermit-crumb create my-docs
+cd my-docs
+cp site.meta.yaml.example site.meta.yaml   # optional
 npm install
 npm run dev
 ```
 
-## Static generate
+What `create` writes:
+
+- `@b4moss/hermit-crumb` wired in `nuxt.config.ts`
+- JA/EN usage content (this set of Markdown pages)
+- UI: `SiteHeader` / `SiteFooter` / `DocsSidebar` / FAQ / pager helpers
+- `app/config/docsNav.ts`, `i18n/locales/`, `site.meta.yaml.example`
+
+| Flag | Effect |
+| --- | --- |
+| `--force` | Overwrite existing files in the target directory |
+
+## Dev and static generate
 
 ```bash
-npm run generate
+npm run dev
+npm run generate   # output: .output/public
 ```
 
-Output goes to `.output/public`.
-
-## Customization map
+## Customization entry points
 
 | Location | Purpose |
 | --- | --- |
-| `site.meta.yaml` (from `.example`) | Site name, URL, GitHub, **SoftwareSourceCode** |
-| Each Markdown frontmatter | `title` / `description` / **`schemaRole`** or **`jsonLd`** |
-| FAQ body `::faq-item` | **FAQPage** Question / Answer |
+| `site.meta.yaml` | Site name, URLs, GitHub / npm, **SoftwareSourceCode** |
+| Markdown frontmatter | `title` / `description` / `schemaRole` or `jsonLd` |
+| Body `::faq-item` | FAQPage Q/A |
 | `app/config/docsNav.ts` | Sidebar / pager |
-| `i18n/locales/` | UI copy (including nav labels) |
+| `i18n/locales/` | UI copy (`nav.*` included) |
+| CSS variable overrides | Theme (Pico tokens) |
 
-## JSON-LD — what you write vs what you get
-
-See the repo file `docs/jsonld.md` for the full authoring guide (Japanese canonical: `docs/jsonld_ja.md`).
-
-| Page | What to write | Resulting `@graph` |
-| --- | --- | --- |
-| [Home](./index.md) | No `schemaRole` | WebPage + SoftwareSourceCode |
-| [Overview](./overview.md) | `schemaRole: TechArticle` | WebPage + TechArticle + SoftwareSourceCode |
-| [Install](./install.md) | Same | Same |
-| [API](./api.md) | `jsonLd` (full form) | WebPage + TechArticle + BreadcrumbList + … |
-| [Tutorial](./tutorial.md) | `schemaRole: HowTo` | WebPage + HowTo + SoftwareSourceCode |
-| [FAQ](./faq.md) | `schemaRole: FAQPage` + `::faq-item` | WebPage + FAQPage + SoftwareSourceCode |
+Next: [Overview](./overview.md) for ownership, [Setup](./install.md) for `add` and module-only install.

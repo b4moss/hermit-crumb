@@ -32,7 +32,7 @@
 ```yaml
 ---
 title: はじめに
-description: ドキュメントサイト雛形の使い方
+description: hermit-crumb でドキュメントサイトを起こす最短手順
 schemaRole: TechArticle
 ---
 ```
@@ -47,13 +47,13 @@ schemaRole: TechArticle
 
 ```yaml
 ---
-title: API リファレンス
-description: 公開 API の一覧
+title: JSON-LD
+description: hermit-crumb の JSON-LD（@graph）の書き方
 
 jsonLd:
   webPage:
     breadcrumb:
-      "@id": https://example.com/ja/api#breadcrumb
+      "@id": https://example.com/ja/json-ld#breadcrumb
   entities:
     - type: TechArticle
       datePublished: "2026-01-01"
@@ -61,7 +61,7 @@ jsonLd:
         "@type": Organization
         name: Example Inc.
     - type: BreadcrumbList
-      "@id": https://example.com/ja/api#breadcrumb
+      "@id": https://example.com/ja/json-ld#breadcrumb
       itemListElement:
         - "@type": ListItem
           position: 1
@@ -166,10 +166,10 @@ jsonLd:
 
 ## サンプル
 
-`content/ja/` 以下に役割別のダミーページがあります。
+`content/ja/` 以下に使い方解説兼・役割別の見本ページがあります。
 
 - `index.md` — `schemaRole` なし（`WebPage` のみ）
-- `overview.md` / `install.md` / `getting-started.md` — `schemaRole: TechArticle`
-- `api.md` — `jsonLd` の詳細記法（プロパティ追加 + 複数エンティティ）
+- `overview.md` / `install.md` / `getting-started.md` / `module.md` / `customize.md` — `schemaRole: TechArticle`
+- `json-ld.md` — `jsonLd` の詳細記法（プロパティ追加 + 複数エンティティ）兼・解説本文
 - `tutorial.md` — `schemaRole: HowTo`
 - `faq.md` — `schemaRole: FAQPage` + MDC

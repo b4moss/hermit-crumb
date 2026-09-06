@@ -13,7 +13,7 @@ npm run dev
 `create` writes a Nuxt app with:
 
 - `@b4moss/hermit-crumb` wired in `nuxt.config.ts`
-- JA/EN sample content under `content/`
+- JA/EN usage docs under `content/` (also JSON-LD / MDC samples)
 - Default UI: `SiteHeader`, `SiteFooter`, `DocsSidebar`, `HeaderPrefsMenu`, `HeaderDropdown`, plus content helpers (`FaqList`, `FaqItem`, `CollapseBox`, `DocsPager`, `DocsJsonLd`)
 - `site.meta.yaml.example`, `app/config/docsNav.ts`, i18n locales
 
