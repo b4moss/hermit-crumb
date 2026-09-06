@@ -112,7 +112,21 @@ function onToggle(parentKey: string, event: Event) {
                 :aria-label="entry.parent.label"
                 @click="onToggle(entry.parent.key, $event)"
               >
-                <span class="sidebar-chevron" aria-hidden="true" />
+                <svg
+                  class="sidebar-chevron"
+                  viewBox="0 0 12 12"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path
+                    d="M3 4.5 L6 7.5 L9 4.5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
               </button>
             </div>
             <div
@@ -194,12 +208,11 @@ function onToggle(parentKey: string, event: Event) {
 
 .sidebar-parent {
   display: flex;
-  align-items: center;
-  gap: 0.15rem;
-  min-height: calc(0.45rem * 2 + 1.4em);
-  padding: 0.15rem 0.2rem 0.15rem 0;
+  align-items: stretch;
+  gap: 0;
   border-radius: 0.35rem;
   color: var(--color-muted);
+  line-height: 1.4;
 }
 
 .sidebar-parent:hover {
@@ -220,16 +233,20 @@ function onToggle(parentKey: string, event: Event) {
   text-decoration: none;
   font-size: 0.9375rem;
   font-weight: 500;
+  line-height: 1.4;
 }
 
 .sidebar-link--parent {
   flex: 1;
   min-width: 0;
-  padding: 0.3rem 0.5rem 0.3rem 0.7rem;
+  display: flex;
+  align-items: center;
+  padding: 0.45rem 0.5rem 0.45rem 0.7rem;
   border-radius: 0;
   color: inherit;
   background: transparent;
   font-weight: inherit;
+  line-height: 1.4;
 }
 
 .sidebar-parent--active .sidebar-link--parent {
@@ -259,19 +276,25 @@ function onToggle(parentKey: string, event: Event) {
 }
 
 .sidebar-toggle {
+  /* Reset Pico button chrome; stretch to parent row and center the SVG. */
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 1.6rem;
-  height: 1.6rem;
-  margin-right: 0.15rem;
+  align-self: stretch;
+  width: 2rem;
+  margin: 0;
+  padding: 0;
   border: 0;
   border-radius: 0.3rem;
   background: transparent;
   color: inherit;
   cursor: pointer;
-  padding: 0;
+  line-height: 0;
+  font-size: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+  box-shadow: none;
 }
 
 .sidebar-toggle:hover {
@@ -285,19 +308,18 @@ function onToggle(parentKey: string, event: Event) {
 
 .sidebar-chevron {
   display: block;
-  width: 0.4rem;
-  height: 0.4rem;
-  margin-top: -0.1rem;
-  border-right: 1.5px solid currentColor;
-  border-bottom: 1.5px solid currentColor;
-  transform: rotate(45deg);
-  transition: transform 0.15s ease, margin-top 0.15s ease;
+  width: 0.75rem;
+  height: 0.75rem;
+  flex-shrink: 0;
   opacity: 0.75;
+  /* Path chevrons optically sit high vs Latin text; keep a clear downward bias. */
+  transform: translateY(5px);
+  transform-origin: 50% 50%;
+  transition: transform 0.15s ease;
 }
 
 .sidebar-group[data-open="true"] .sidebar-chevron {
-  margin-top: 0.15rem;
-  transform: rotate(-135deg);
+  transform: translateY(5px) rotate(180deg);
 }
 
 .sidebar-children {
