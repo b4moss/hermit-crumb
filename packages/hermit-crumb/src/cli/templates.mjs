@@ -51,6 +51,12 @@ export const ADD_TEMPLATES = [
     note: "create デフォルト UI（復旧用にも add 可）",
   },
   {
+    name: "DocsToc",
+    template: "DocsToc.vue",
+    out: "app/components/DocsToc.vue",
+    note: "create デフォルト UI（復旧用にも add 可）",
+  },
+  {
     name: "HeaderPrefsMenu",
     template: "HeaderPrefsMenu.vue",
     out: "app/components/HeaderPrefsMenu.vue",

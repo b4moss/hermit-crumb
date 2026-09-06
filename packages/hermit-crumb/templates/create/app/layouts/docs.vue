@@ -2,8 +2,9 @@
   <div class="site-shell">
     <SiteHeader />
     <div class="site-body">
+      <DocsSidebar />
       <div class="site-content">
-        <main class="site-main">
+        <main class="site-main site-main--docs">
           <slot />
         </main>
         <SiteFooter />

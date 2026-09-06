@@ -49,12 +49,14 @@
   --hc-max-width: 52rem;
   --hc-header-height: 3.5rem;
   --hc-sidebar-width: 15.5rem;
+  --hc-toc-width: 14rem;
 
   --font-sans: var(--hc-font-sans);
   --font-mono: var(--hc-font-mono);
   --max-width: var(--hc-max-width);
   --header-height: var(--hc-header-height);
   --sidebar-width: var(--hc-sidebar-width);
+  --toc-width: var(--hc-toc-width);
 
   accent-color: var(--color-accent);
 }

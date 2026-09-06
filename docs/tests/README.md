@@ -19,6 +19,7 @@ TDD の入力正本。フォーマットは憲章 [`tdd.md`](../../charter/docs/
 | [faq.md](./faq.md) | `extractFaq.ts` |
 | [sitemap.md](./sitemap.md) | `buildSitemap.ts` |
 | [composables.md](./composables.md) | `useSidebar`, `useDocsNav`, `useDocsNavAccordion`, `useJsonLd` |
+| [toc.md](./toc.md) | `useDocsToc`、TOC 純関数、`DocsToc`、docs/default レイアウト（#36） |
 | [cli.md](./cli.md) | `parse-args`, `templates`, `create`, `add`, CLI `run` |
 | [module.md](./module.md) | `module.ts` セットアップ |
 
