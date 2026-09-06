@@ -2,6 +2,12 @@
 
 All notable changes to `@b4moss/hermit-crumb` are documented in this file.
 
+## [Unreleased]
+
+### Changed
+
+- Node.js requirement raised to `>= 24.20` (dev + GitHub Actions + Netlify pin `24.20`)
+
 ## [0.1.0] — 2026-09-05
 
 初回公開。

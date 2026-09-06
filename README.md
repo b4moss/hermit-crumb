@@ -34,7 +34,7 @@ export default defineNuxtConfig({
 })
 ```
 
-Requires **Node.js >= 22.19**.
+Requires **Node.js >= 24.20**.
 
 ## Repository layout
 

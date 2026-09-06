@@ -31,7 +31,7 @@ Config: [`netlify.toml`](../netlify.toml).
 | Production branch | `preview-site` |
 | Build | `npm ci && npm run generate:playground` |
 | Publish | `playground/.output/public` |
-| Node | `22.19` |
+| Node | `24.20` |
 
 Use Netlify Git integration (no dedicated deploy workflow). Point the site’s production branch at `preview-site`.
 
