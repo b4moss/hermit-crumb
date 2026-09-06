@@ -276,7 +276,11 @@ function onToggle(parentKey: string, event: Event) {
 
 .sidebar-toggle:hover {
   color: var(--color-ink);
-  background: color-mix(in srgb, var(--color-ink) 8%, transparent);
+  background: transparent;
+}
+
+.sidebar-parent:hover .sidebar-toggle {
+  color: var(--color-ink);
 }
 
 .sidebar-chevron {
