@@ -1,7 +1,8 @@
-# Unit + integration CI for the published package (playground excluded).
-# - PRs into develop / dev-*: always run (unless docs-only)
-# - Pushes to main / develop / release: run, but skip if this SHA already passed CI
-# - Docs-only changes: skip tests
+# Package CI (playground excluded).
+# - PR → develop / dev-*: lint → typecheck → test → smoke (one job, one npm ci)
+# - Docs-only changes: skip heavy steps
+# - Same head SHA already green: skip heavy steps
+# Local pre-PR: use act when available (see docs/publishing.md)
 
 name: CI
 
@@ -10,11 +11,6 @@ on:
     branches:
       - develop
       - "dev-*"
-  push:
-    branches:
-      - main
-      - develop
-      - release
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -25,24 +21,19 @@ permissions:
   actions: read
 
 jobs:
-  gate:
-    name: gate (docs / prior success)
+  ci:
+    name: CI
     runs-on: ubuntu-latest
-    timeout-minutes: 5
-    outputs:
-      run_tests: ${{ steps.decide.outputs.run_tests }}
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Decide whether to run tests
+      - name: Decide whether to run checks
         id: decide
         env:
-          EVENT_NAME: ${{ github.event_name }}
-          BEFORE: ${{ github.event.before }}
-          SHA: ${{ github.sha }}
           PR_BASE: ${{ github.event.pull_request.base.sha }}
           PR_HEAD: ${{ github.event.pull_request.head.sha }}
           REPO: ${{ github.repository }}
@@ -52,13 +43,8 @@ jobs:
           set -euo pipefail
 
           docs_only=true
-          if [ "$EVENT_NAME" = "pull_request" ]; then
-            BASE="$PR_BASE"
-            HEAD="$PR_HEAD"
-          else
-            BASE="$BEFORE"
-            HEAD="$SHA"
-          fi
+          BASE="$PR_BASE"
+          HEAD="$PR_HEAD"
 
           if [ -z "${BASE:-}" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then
             echo "No usable base SHA — treat as code change"
@@ -79,96 +65,50 @@ jobs:
           fi
 
           if [ "$docs_only" = "true" ]; then
-            echo "Docs-only change — skip CI tests"
-            echo "run_tests=false" >> "$GITHUB_OUTPUT"
+            echo "Docs-only change — skip CI checks"
+            echo "run_checks=false" >> "$GITHUB_OUTPUT"
+            echo "reason=docs-only" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
-          if [ "$EVENT_NAME" = "push" ]; then
-            count="$(gh api "repos/${REPO}/actions/runs?head_sha=${SHA}&status=completed&per_page=100" \
-              --jq "[.workflow_runs[] | select(.name == \"CI\" and .conclusion == \"success\" and (.id | tostring) != \"${RUN_ID}\")] | length")"
-            if [ "${count:-0}" -gt 0 ]; then
-              echo "CI already succeeded for $SHA ($count prior run(s)) — skip"
-              echo "run_tests=false" >> "$GITHUB_OUTPUT"
-              exit 0
-            fi
+          count="$(gh api "repos/${REPO}/actions/runs?head_sha=${HEAD}&status=completed&per_page=100" \
+            --jq "[.workflow_runs[] | select(.name == \"CI\" and .conclusion == \"success\" and (.id | tostring) != \"${RUN_ID}\")] | length")"
+          if [ "${count:-0}" -gt 0 ]; then
+            echo "CI already succeeded for $HEAD ($count prior run(s)) — skip"
+            echo "run_checks=false" >> "$GITHUB_OUTPUT"
+            echo "reason=sha-already-green" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
 
-          echo "run_tests=true" >> "$GITHUB_OUTPUT"
+          echo "run_checks=true" >> "$GITHUB_OUTPUT"
+          echo "reason=full" >> "$GITHUB_OUTPUT"
 
-  lint:
-    name: lint
-    needs: gate
-    if: needs.gate.outputs.run_tests == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup-node-npm
+      - name: Setup Node.js and install
+        if: steps.decide.outputs.run_checks == 'true'
+        uses: ./.github/actions/setup-node-npm
+
       - name: Lint
+        if: steps.decide.outputs.run_checks == 'true'
         run: npm run lint
 
-  test:
-    name: test (unit + integration)
-    needs: gate
-    if: needs.gate.outputs.run_tests == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup-node-npm
-      - name: Test
-        run: npm run test
-
-  build:
-    name: typecheck / build
-    needs: gate
-    if: needs.gate.outputs.run_tests == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup-node-npm
       - name: Typecheck / build
+        if: steps.decide.outputs.run_checks == 'true'
         run: npm run typecheck
 
-  smoke:
-    name: smoke create
-    needs: gate
-    if: needs.gate.outputs.run_tests == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup-node-npm
+      - name: Test (unit + integration)
+        if: steps.decide.outputs.run_checks == 'true'
+        run: npm run test
+
       - name: Smoke create
+        if: steps.decide.outputs.run_checks == 'true'
         run: npm run smoke:create
 
-  ci:
-    name: CI result
-    needs: [gate, lint, test, build, smoke]
-    if: always() && needs.gate.result == 'success'
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - name: Aggregate
-        env:
-          RUN_TESTS: ${{ needs.gate.outputs.run_tests }}
-          LINT: ${{ needs.lint.result }}
-          TEST: ${{ needs.test.result }}
-          BUILD: ${{ needs.build.result }}
-          SMOKE: ${{ needs.smoke.result }}
+      - name: Summary
         run: |
           set -euo pipefail
-          if [ "$RUN_TESTS" != "true" ]; then
-            echo "Skipped (docs-only or prior successful CI for this SHA)"
-            exit 0
+          echo "run_checks=${{ steps.decide.outputs.run_checks }} reason=${{ steps.decide.outputs.reason }}"
+          if [ "${{ steps.decide.outputs.run_checks }}" != "true" ]; then
+            echo "Skipped heavy checks (${{ steps.decide.outputs.reason }})"
+          else
+            echo "CI checks completed"
           fi
-          echo "lint=$LINT test=$TEST build=$BUILD smoke=$SMOKE"
-          for result in "$LINT" "$TEST" "$BUILD" "$SMOKE"; do
-            if [ "$result" != "success" ]; then
-              echo "CI failed"
-              exit 1
-            fi
-          done
-          echo "CI passed"
