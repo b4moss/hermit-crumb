@@ -55,8 +55,10 @@
     "build": "nuxt-module-build build",
     "typecheck": "nuxt-module-build build",
     "lint": "node ./scripts/lint.mjs",
-    "test": "node --test test/**/*.test.mjs",
-    "smoke:create": "node ./scripts/smoke-create.mjs"
+    "test": "vitest run",
+    "smoke:create": "node ./scripts/smoke-create.mjs",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@nuxt/kit": "^4.5.2",
@@ -74,7 +76,10 @@
     "@nuxt/module-builder": "^1.0.2",
     "@nuxt/schema": "^4.5.2",
     "@types/node": "^24.13.3",
+    "@vitest/coverage-v8": "^3.2.7",
     "nuxt": "^4.5.2",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.7",
+    "vue": "^3.5.13"
   }
 }
