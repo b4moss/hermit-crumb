@@ -42,11 +42,13 @@ Requires **Node.js >= 24.20**.
 | --- | --- |
 | [`packages/hermit-crumb`](./packages/hermit-crumb) | Published package (module + CLI) |
 | [`playground`](./playground) | Demo site (create-equivalent; Netlify target) |
-| [`docs`](./docs/README.md) | Documentation index |
+| [`docs`](./docs/README.md) | Documentation index (incl. [test specs](./docs/tests/README.md)) |
+| [`charter`](./charter/README.md) | Dev charter submodule (`b4moss/charter` `docs` branch) |
 
 ## Develop this monorepo
 
 ```shell
+git submodule update --init --recursive
 npm install
 npm run lint
 npm run typecheck
