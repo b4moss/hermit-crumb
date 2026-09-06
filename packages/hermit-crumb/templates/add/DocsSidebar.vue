@@ -71,6 +71,13 @@ function isGroup(entry: NavItem | NavGroup): entry is NavGroup {
   return "children" in entry;
 }
 
+function onParentClick(parentKey: string) {
+  if (expandable) {
+    toggle(parentKey);
+  }
+  close();
+}
+
 function onToggle(parentKey: string, event: Event) {
   event.preventDefault();
   event.stopPropagation();
@@ -84,12 +91,15 @@ function onToggle(parentKey: string, event: Event) {
       <template v-for="entry in groups" :key="isGroup(entry) ? entry.parent.key : entry.key">
         <template v-if="isGroup(entry)">
           <div class="sidebar-group" :data-open="isOpen(entry.parent.key) ? 'true' : 'false'">
-            <div class="sidebar-parent">
+            <div
+              class="sidebar-parent"
+              :class="{ 'sidebar-parent--active': isActive(entry.parent) }"
+            >
               <NuxtLink
                 :to="entry.parent.to"
                 class="sidebar-link sidebar-link--parent"
                 :class="{ 'router-link-exact-active': isActive(entry.parent) }"
-                @click="close"
+                @click="onParentClick(entry.parent.key)"
               >
                 {{ entry.parent.label }}
               </NuxtLink>
@@ -186,6 +196,20 @@ function onToggle(parentKey: string, event: Event) {
   display: flex;
   align-items: center;
   gap: 0.15rem;
+  min-height: calc(0.45rem * 2 + 1.4em);
+  padding: 0.15rem 0.2rem 0.15rem 0;
+  border-radius: 0.35rem;
+  color: var(--color-muted);
+}
+
+.sidebar-parent:hover {
+  color: var(--color-ink);
+  background: var(--color-accent-soft);
+}
+
+.sidebar-parent--active {
+  color: var(--color-accent);
+  background: var(--color-accent-soft);
 }
 
 .sidebar-link {
@@ -201,11 +225,25 @@ function onToggle(parentKey: string, event: Event) {
 .sidebar-link--parent {
   flex: 1;
   min-width: 0;
+  padding: 0.3rem 0.5rem 0.3rem 0.7rem;
+  border-radius: 0;
+  color: inherit;
+  background: transparent;
+  font-weight: inherit;
+}
+
+.sidebar-parent--active .sidebar-link--parent {
+  font-weight: 600;
 }
 
 .sidebar-link:hover {
   color: var(--color-ink);
   background: var(--color-accent-soft);
+}
+
+.sidebar-link--parent:hover {
+  color: inherit;
+  background: transparent;
 }
 
 .sidebar-link--child {
@@ -225,33 +263,37 @@ function onToggle(parentKey: string, event: Event) {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 1.85rem;
-  height: 1.85rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-right: 0.15rem;
   border: 0;
   border-radius: 0.3rem;
   background: transparent;
-  color: var(--color-muted);
+  color: inherit;
   cursor: pointer;
   padding: 0;
 }
 
 .sidebar-toggle:hover {
   color: var(--color-ink);
-  background: var(--color-accent-soft);
+  background: color-mix(in srgb, var(--color-ink) 8%, transparent);
 }
 
 .sidebar-chevron {
+  display: block;
   width: 0.4rem;
   height: 0.4rem;
+  margin-top: -0.1rem;
   border-right: 1.5px solid currentColor;
   border-bottom: 1.5px solid currentColor;
   transform: rotate(45deg);
-  transition: transform 0.15s ease;
+  transition: transform 0.15s ease, margin-top 0.15s ease;
   opacity: 0.75;
 }
 
 .sidebar-group[data-open="true"] .sidebar-chevron {
-  transform: translateY(1px) rotate(-135deg);
+  margin-top: 0.15rem;
+  transform: rotate(-135deg);
 }
 
 .sidebar-children {
