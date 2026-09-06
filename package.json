@@ -19,7 +19,7 @@
     "postinstall": "npm run build -w @b4moss/hermit-crumb"
   },
   "engines": {
-    "node": ">=22.19.0"
+    "node": ">=24.20.0"
   },
   "license": "MIT"
 }
