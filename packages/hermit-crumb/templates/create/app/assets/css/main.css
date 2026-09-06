@@ -65,6 +65,23 @@ main pre code {
   padding: 2rem 0 3rem;
 }
 
+.docs-content-row {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  min-width: 0;
+  width: 100%;
+}
+
+.docs-content-row .site-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.prose :where(h1, h2, h3, h4, h5, h6) {
+  scroll-margin-top: calc(var(--header-height) + 0.75rem);
+}
+
 .prose :where(h1, h2, h3) {
   line-height: 1.25;
   font-weight: 600;

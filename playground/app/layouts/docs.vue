@@ -2,10 +2,14 @@
   <div class="site-shell">
     <SiteHeader />
     <div class="site-body">
+      <DocsSidebar />
       <div class="site-content">
-        <main class="site-main">
-          <slot />
-        </main>
+        <div class="docs-content-row">
+          <main class="site-main">
+            <slot />
+          </main>
+          <DocsToc />
+        </div>
         <SiteFooter />
       </div>
     </div>

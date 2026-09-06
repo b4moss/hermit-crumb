@@ -1,4 +1,6 @@
 <script setup lang="ts">
+definePageMeta({ layout: "docs" });
+
 import { withLeadingSlash } from "ufo";
 import type { Collections } from "@nuxt/content";
 const route = useRoute();
@@ -90,6 +92,18 @@ const faqItems = computed<FaqQa[]>(() => {
     return [];
   }
   return extractFaqFromBody(page.value.body);
+});
+
+watch(
+  page,
+  (value) => {
+    setDocsTocLinks(extractTocLinksFromPage(value));
+  },
+  { immediate: true },
+);
+
+onBeforeUnmount(() => {
+  setDocsTocLinks([]);
 });
 </script>
 

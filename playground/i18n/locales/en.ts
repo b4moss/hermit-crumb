@@ -17,6 +17,7 @@ export default {
     "npm": "npm",
     "prev": "Previous",
     "next": "Next",
+    "toc": "On this page",
     "pager": "Page navigation",
     "versions": "Version"
   },

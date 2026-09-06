@@ -55,7 +55,7 @@
     "build": "nuxt-module-build build",
     "typecheck": "nuxt-module-build build",
     "lint": "node ./scripts/lint.mjs",
-    "test": "node --test test/**/*.test.mjs",
+    "test": "node --experimental-strip-types --test test/**/*.test.mjs",
     "smoke:create": "node ./scripts/smoke-create.mjs"
   },
   "dependencies": {

@@ -17,6 +17,7 @@ export default {
     "npm": "npm",
     "prev": "前へ",
     "next": "次へ",
+    "toc": "目次",
     "pager": "ページナビゲーション",
     "versions": "バージョン"
   },
