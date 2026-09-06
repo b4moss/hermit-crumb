@@ -1,5 +1,5 @@
-# Codecov upload — runs only on pushes to main (badge later).
-# CODECOV_TOKEN is provided as an organization secret.
+# Codecov upload — push to main only (informational; badge later).
+# PR CI does not upload. CODECOV_TOKEN is an organization secret.
 
 name: Codecov
 
@@ -42,5 +42,5 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           files: packages/hermit-crumb/coverage/lcov.info
-          fail_ci_if_error: true
+          fail_ci_if_error: false
           token: ${{ secrets.CODECOV_TOKEN }}

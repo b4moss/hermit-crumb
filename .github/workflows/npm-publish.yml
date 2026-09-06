@@ -1,11 +1,12 @@
-# Publishes @b4moss/hermit-crumb when a tagged commit is on `release`
-# and package.json version matches the tag.
+# Publishes @b4moss/hermit-crumb when a GitHub Release (v*) is published
+# and that tag commit is on `release` with matching package.json version.
 #
 # Intended flow:
 # 1. Tag on main (e.g. v0.1.0)
 # 2. Create a GitHub Release from that tag
-# 3. Merge / push the same tagged commit onto `release`
-# → this workflow publishes to npm
+# 3. Land the same tagged commit on `release` (merge / push)
+# → publish runs when the Release is published *and* the tag is on release
+#    (re-run or push to release after the tag lands if Release came first)
 #
 # See docs/publishing.md.
 
@@ -17,7 +18,6 @@ on:
       - release
   release:
     types: [published]
-  workflow_dispatch:
 
 concurrency:
   group: npm-publish

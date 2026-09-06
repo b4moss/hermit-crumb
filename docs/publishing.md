@@ -4,8 +4,8 @@
 
 | Branch | Role |
 | --- | --- |
-| `develop` / `dev-*` | Integration. PRs here always run package CI (unit + integration). |
-| `main` | Stable line. CI on push (skipped if the SHA already passed). Codecov + OpenSSF Scorecard on push. |
+| `develop` / `dev-*` | Integration. PRs here run package CI. |
+| `main` | Stable line. Codecov + OpenSSF Scorecard on push (no package CI). |
 | `release` | npm CD. Tagged commit with matching `package.json` version → publish. |
 | `preview-site` | Doc site (playground) CD. PR checks in Actions; Netlify deploys on merge. |
 
@@ -15,11 +15,11 @@ Workflow: [`.github/workflows/ci.yml`](../.github/workflows/ci.yml).
 
 | Trigger | Behavior |
 | --- | --- |
-| PR → `develop` or `dev-*` | lint / typecheck·build / unit+integration test / `smoke:create` (parallel). Playground excluded. |
-| Push → `main`, `develop`, `release` | Same checks, but **skip** if this commit SHA already has a successful CI run. |
-| Docs-only changes | Skip tests (`docs/**`, root `README.md` / `CHANGELOG.md` / `LICENSE`, package & playground READMEs). |
+| PR → `develop` or `dev-*` | One job: lint → typecheck → unit+integration → `smoke:create` (single `npm ci`). Playground excluded. |
+| Docs-only changes | Skip heavy steps (`docs/**`, root `README.md` / `CHANGELOG.md` / `LICENSE`, package & playground READMEs). |
+| Same head SHA already green | Skip heavy steps. |
 
-Jobs use npm cache and run in parallel. A final **CI result** job aggregates status for branch protection.
+No CI on push to `main` / `develop` / `release` (avoid re-running what the PR already proved). Required check name: **CI**.
 
 ## CD — npm (`@b4moss/hermit-crumb`)
 
@@ -34,7 +34,7 @@ Publish when **all** are true:
 ### Release flow
 
 ```shell
-# on main, after CI is green
+# on main
 npm ci
 npm run build -w @b4moss/hermit-crumb
 npm pack -w @b4moss/hermit-crumb
@@ -48,7 +48,7 @@ git push origin main:release
 # or merge a PR into release
 ```
 
-Triggers: push to `release`, or `release` published (skips until the tag is on `release`).
+Triggers: `release` published, or push to `release` (so publish still runs if the tag lands on `release` after the Release event).
 
 Secret: `NPM_TOKEN` (publish access for `@b4moss`).
 
@@ -57,7 +57,7 @@ Secret: `NPM_TOKEN` (publish access for `@b4moss`).
 | Step | Where |
 | --- | --- |
 | PR → `preview-site` | [`.github/workflows/doc-site.yml`](../.github/workflows/doc-site.yml) runs `typecheck:playground` + `generate:playground` |
-| Merge → `preview-site` | Netlify Git integration builds and deploys ([`netlify.toml`](../netlify.toml); build also runs typecheck + generate) |
+| Merge → `preview-site` | Netlify Git integration builds and deploys ([`netlify.toml`](../netlify.toml)) |
 
 No Netlify token in GitHub Actions — production branch in the Netlify UI must be `preview-site`.
 
@@ -68,12 +68,12 @@ No Netlify token in GitHub Actions — production branch in the Netlify UI must 
 | Publish directory | `playground/.output/public` |
 | Node | `.nvmrc` (`22.19`) |
 
-## Main-only quality (badges later)
+## Main-only quality
 
 | Workflow | When | Notes |
 | --- | --- | --- |
-| [`.github/workflows/codecov.yml`](../.github/workflows/codecov.yml) | Push to `main` | Uploads Node test coverage. Uses org secret `CODECOV_TOKEN`. |
-| [`.github/workflows/scorecard.yml`](../.github/workflows/scorecard.yml) | Push to `main` | OpenSSF Scorecard → code scanning SARIF. |
+| [`.github/workflows/codecov.yml`](../.github/workflows/codecov.yml) | Push to `main` | Coverage upload. Informational (`fail_ci_if_error: false`). Org secret `CODECOV_TOKEN`. |
+| [`.github/workflows/scorecard.yml`](../.github/workflows/scorecard.yml) | Push to `main` + weekly | OpenSSF Scorecard → code scanning SARIF. |
 
 ## Secrets checklist
 
