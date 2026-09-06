@@ -29,8 +29,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          node-version: "24.20"
-          cache: npm
+          fetch-depth: 0
+
+      - name: Decide whether to run checks
+        id: decide
+        env:
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
 
           docs_only=true
           BASE="$PR_BASE"
@@ -89,7 +99,8 @@ jobs:
         if: steps.decide.outputs.run_checks == 'true'
         run: npm run test
 
-      - name: Smoke create (file link + nuxt prepare)
+      - name: Smoke create
+        if: steps.decide.outputs.run_checks == 'true'
         run: npm run smoke:create
 
       - name: Summary
