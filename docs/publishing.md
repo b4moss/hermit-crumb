@@ -64,11 +64,9 @@ No Netlify token in GitHub Actions — production branch in the Netlify UI must 
 | Setting | Value |
 | --- | --- |
 | Production branch | `preview-site` |
-| Build | `npm ci && npm run typecheck:playground && npm run generate:playground` |
-| Publish directory | `playground/.output/public` |
-| Node | `.nvmrc` (`22.19`) |
-
-## Main-only quality
+| Build | `npm ci && npm run generate:playground` |
+| Publish | `playground/.output/public` |
+| Node | `24.20` |
 
 | Workflow | When | Notes |
 | --- | --- | --- |
@@ -77,7 +75,6 @@ No Netlify token in GitHub Actions — production branch in the Netlify UI must 
 
 ## Secrets checklist
 
-| Secret | Scope | Used by |
-| --- | --- | --- |
-| `NPM_TOKEN` | repo (or org) | npm publish |
-| `CODECOV_TOKEN` | organization | Codecov upload on `main` |
+[`.github/workflows/ci.yml`](../.github/workflows/ci.yml) runs lint, typecheck, build, tests, `smoke:create`, and `generate:playground` on mainline / PR branches.
+
+Before opening a PR, rehearse that workflow locally with [act](./act.md) (`npm run act:ci`). Do not run the npm publish workflow via act.

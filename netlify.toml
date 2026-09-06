@@ -6,4 +6,4 @@
   publish = "playground/.output/public"
 
 [build.environment]
-  NODE_VERSION = "22.19"
+  NODE_VERSION = "24.20"

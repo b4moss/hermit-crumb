@@ -17,6 +17,10 @@ yarn-error.log*
 .env
 .env.*
 !.env.example
+.secrets
+
+# act local artifacts
+.act/
 
 # OS / editor
 .DS_Store

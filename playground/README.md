@@ -4,7 +4,7 @@ In-repo demo for `@b4moss/hermit-crumb` (create-equivalent: module + generated U
 
 ## Run
 
-Node.js **>= 22.19**.
+Node.js **>= 24.20**.
 
 ```shell
 npm install

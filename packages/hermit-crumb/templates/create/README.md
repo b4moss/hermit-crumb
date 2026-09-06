@@ -2,6 +2,8 @@
 
 `@b4moss/hermit-crumb` の `create` で生成したドキュメントサイトです。
 
+初期の `content/` は hermit-crumb の使い方解説であり、Markdown / frontmatter / MDC / JSON-LD の実装見本でもあります。自プロダクト向けに差し替えてください。
+
 ## はじめ方
 
 ```shell
