@@ -40,7 +40,7 @@ CLI 引数・テンプレート・スキャフォールド。対象: `packages/h
 
 #### テスト：正常系
 
-- 計画済み名前（DocsPager, DocsJsonLd, FaqList, FaqItem, CollapseBox, SiteHeader, SiteFooter, DocsSidebar, HeaderPrefsMenu, HeaderDropdown）が揃う
+- 計画済み名前（DocsPager, DocsJsonLd, FaqList, FaqItem, CollapseBox, SiteHeader, SiteFooter, DocsSidebar, DocsToc, HeaderPrefsMenu, HeaderDropdown）が揃う
 - 大文字小文字を無視して `findTemplate` がヒットする
 - content 系は `app/components/content/...` へマップされる
 - `listTemplates` が name / out / note を返す
