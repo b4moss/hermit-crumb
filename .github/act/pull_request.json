@@ -1,0 +1,15 @@
+{
+  "action": "opened",
+  "number": 1,
+  "pull_request": {
+    "number": 1,
+    "title": "local act pull_request",
+    "head": {
+      "ref": "local",
+      "sha": "0000000000000000000000000000000000000000"
+    },
+    "base": {
+      "ref": "dev-v0.2.0"
+    }
+  }
+}

@@ -38,3 +38,5 @@ Use Netlify Git integration (no dedicated deploy workflow). Point the site’s p
 ## CI
 
 [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) runs lint, typecheck, build, tests, `smoke:create`, and `generate:playground` on mainline / PR branches.
+
+Before opening a PR, rehearse that workflow locally with [act](./act.md) (`npm run act:ci`). Do not run the npm publish workflow via act.
