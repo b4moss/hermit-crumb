@@ -118,7 +118,6 @@ const { t } = useI18n();
   box-sizing: border-box;
   padding: 0.25rem 0.4rem;
   border-radius: 0.3rem;
-  border-left: 2px solid transparent;
   color: var(--color-muted);
   text-align: left;
   text-decoration: none;
@@ -157,7 +156,6 @@ const { t } = useI18n();
 
 .docs-toc__link--active {
   color: var(--color-accent);
-  border-left-color: var(--color-accent);
   font-weight: 600;
 }
 </style>
