@@ -29,7 +29,7 @@ const themeOptions = computed(() => [
 ]);
 
 async function chooseLanguage(code: string, closeOuter: () => void) {
-  if (code !== locale.value) {
+  if (code !== locale.value && (code === "ja" || code === "en")) {
     await setLocale(code);
   }
   closeOuter();

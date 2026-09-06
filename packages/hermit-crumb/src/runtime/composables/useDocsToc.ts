@@ -8,8 +8,6 @@ import {
   type TocLink,
 } from "../utils/toc";
 
-export type { TocLink };
-
 export type UseDocsTocOptions = {
   /** Max heading depth (1–6). Default 3. */
   depth?: MaybeRefOrGetter<number | undefined>;
