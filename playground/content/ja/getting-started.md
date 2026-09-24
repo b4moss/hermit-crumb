@@ -1,48 +1,51 @@
 ---
 # @graph: WebPage + WebSite + TechArticle + SoftwareSourceCode
-# 書く場所: site.meta.yaml（共通）/ schemaRole: TechArticle / title・description
-# 詳細: docs/jsonld_ja.md
 title: はじめに
-description: ドキュメントサイト雛形の使い方
+description: hermit-crumb でドキュメントサイトを起こす最短手順
 schemaRole: TechArticle
 ---
 
 # はじめに
 
-## 開発サーバ
+最短経路は CLI の `create` です。生成物はあなたのプロジェクトになります（パッケージ更新で上書きされません）。
+
+## サイトを作る
 
 ```bash
+npx @b4moss/hermit-crumb create my-docs
+cd my-docs
+cp site.meta.yaml.example site.meta.yaml   # 任意
 npm install
 npm run dev
 ```
 
-## 静的生成
+`create` が書き出す主なもの:
+
+- `nuxt.config.ts` に `@b4moss/hermit-crumb` を配線
+- JA/EN の使い方コンテンツ（この一連の Markdown）
+- UI: `SiteHeader` / `SiteFooter` / `DocsSidebar` / FAQ・ページャーなど
+- `app/config/docsNav.ts`、`i18n/locales/`、`site.meta.yaml.example`
+
+| Flag | 効果 |
+| --- | --- |
+| `--force` | 対象ディレクトリの既存ファイルを上書き |
+
+## 開発と静的生成
 
 ```bash
-npm run generate
+npm run dev
+npm run generate   # 出力は .output/public
 ```
 
-出力は `.output/public` です。
-
-## カスタマイズ要点
+## カスタマイズの入口
 
 | 場所 | 内容 |
 | --- | --- |
-| `site.meta.yaml`（雛形は `.example`） | サイト名・URL・GitHub・**SoftwareSourceCode** |
-| 各 Markdown の frontmatter | `title` / `description` / **`schemaRole`** または **`jsonLd`** |
-| FAQ 本文の `::faq-item` | **FAQPage** の Question / Answer |
+| `site.meta.yaml` | サイト名・URL・GitHub / npm・**SoftwareSourceCode** |
+| Markdown frontmatter | `title` / `description` / `schemaRole` または `jsonLd` |
+| 本文の `::faq-item` | **FAQPage** の Q/A |
 | `app/config/docsNav.ts` | サイドバー／ページャー |
-| `i18n/locales/` | UI 文言（ナビラベル含む） |
+| `i18n/locales/` | UI 文言（`nav.*` 含む） |
+| CSS 変数オーバーライド | テーマ（Pico トークン） |
 
-## JSON-LD — 「何を書くと何が出るか」ダミー
-
-詳しい記法はリポジトリの `docs/jsonld_ja.md` を参照してください。
-
-| ページ | 書くこと | 出る `@graph` |
-| --- | --- | --- |
-| [ホーム](./index.md) | `schemaRole` なし | WebPage + SoftwareSourceCode |
-| [概要](./overview.md) | `schemaRole: TechArticle` | WebPage + TechArticle + SoftwareSourceCode |
-| [インストール](./install.md) | 同上 | 同上 |
-| [API](./api.md) | `jsonLd`（詳細記法） | WebPage + TechArticle + BreadcrumbList + … |
-| [チュートリアル](./tutorial.md) | `schemaRole: HowTo` | WebPage + HowTo + SoftwareSourceCode |
-| [FAQ](./faq.md) | `schemaRole: FAQPage` + `::faq-item` | WebPage + FAQPage + SoftwareSourceCode |
+次は [概要](./overview.md) で所有権の境界を、[導入](./install.md) で `add` とモジュールのみ導入を確認してください。

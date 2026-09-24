@@ -44,6 +44,7 @@ describe("templates registry", () => {
       "SiteHeader",
       "SiteFooter",
       "DocsSidebar",
+      "DocsToc",
       "HeaderPrefsMenu",
       "HeaderDropdown",
     ]) {

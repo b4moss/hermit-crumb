@@ -5,10 +5,11 @@ const FALLBACK = "ja";
 function pickFromAcceptLanguage(header: string | undefined): string {
   if (!header) return FALLBACK;
   const parts = header.split(",").map((part) => {
-    const [tag, ...params] = part.trim().split(";");
+    const [tagRaw, ...params] = part.trim().split(";");
+    const tag = (tagRaw ?? "").toLowerCase();
     const q = params.find((p) => p.trim().startsWith("q="));
     const quality = q ? Number(q.split("=")[1]) || 0 : 1;
-    return { tag: tag.toLowerCase(), quality };
+    return { tag, quality };
   });
   parts.sort((a, b) => b.quality - a.quality);
 

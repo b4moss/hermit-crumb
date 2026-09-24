@@ -27,7 +27,7 @@ Two use cases:
 ```yaml
 ---
 title: Getting started
-description: How to use this documentation site scaffold
+description: Shortest path to a hermit-crumb documentation site
 schemaRole: TechArticle
 ---
 ```
@@ -38,14 +38,14 @@ Allowed `schemaRole` values: `TechArticle` / `HowTo` / `FAQPage`.
 
 ## Full form (`jsonLd`)
 
-Use `jsonLd` to add properties or multiple entities. See `content/*/api.md` for a worked example, and [docs/jsonld_ja.md](./jsonld_ja.md) for the full rules (merge, known vs unknown types, Organization, escape hatches, FAQ MDC collection).
+Use `jsonLd` to add properties or multiple entities. See `content/*/json-ld.md` for a worked example (also the in-site guide), and [docs/jsonld_ja.md](./jsonld_ja.md) for the full rules (merge, known vs unknown types, Organization, escape hatches, FAQ MDC collection).
 
 ## Samples
 
 Under `content/{ja,en}/`:
 
 - `index.md` — no `schemaRole` (`WebPage` only)
-- `overview.md` / `install.md` / `getting-started.md` — `schemaRole: TechArticle`
-- `api.md` — `jsonLd` full form (property merge + multiple entities)
+- `overview.md` / `install.md` / `getting-started.md` / `module.md` / `customize.md` — `schemaRole: TechArticle`
+- `json-ld.md` — `jsonLd` full form (property merge + multiple entities) and usage guide
 - `tutorial.md` — `schemaRole: HowTo`
 - `faq.md` — `schemaRole: FAQPage` + MDC

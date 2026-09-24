@@ -51,7 +51,7 @@ const n: number = 42;
 
 ```yaml
 # site meta
-siteName: Doc Site
+siteName: hermit-crumb
 siteUrl: https://example.com
 enabled: true
 ```

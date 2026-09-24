@@ -16,10 +16,14 @@
     "dev:playground": "npm run dev -w hermit-crumb-playground",
     "generate:playground": "npm run generate -w hermit-crumb-playground",
     "typecheck:playground": "npm run typecheck -w hermit-crumb-playground",
+    "act:ci": "act pull_request -e .github/act/pull_request.json",
     "postinstall": "npm run build -w @b4moss/hermit-crumb"
   },
   "engines": {
-    "node": ">=22.19.0"
+    "node": ">=24.20.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "overrides": {
+    "vue-router": "^5.2.0"
+  }
 }

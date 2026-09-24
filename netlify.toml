@@ -1,9 +1,9 @@
-# Netlify builds the monorepo playground (create-equivalent demo).
-# Production branch must be `preview-site` (see docs/publishing.md).
+# Netlify Git integration builds/deploys the playground on merge to
+# `preview-site`. PR checks live in `.github/workflows/doc-site.yml`.
 
 [build]
-  command = "npm ci && npm run generate:playground"
+  command = "npm ci && npm run typecheck:playground && npm run generate:playground"
   publish = "playground/.output/public"
 
 [build.environment]
-  NODE_VERSION = "22.19"
+  NODE_VERSION = "24.20"

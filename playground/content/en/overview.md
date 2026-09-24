@@ -1,16 +1,37 @@
 ---
 # @graph: WebPage + WebSite + TechArticle + SoftwareSourceCode
-# Write in: site.meta.yaml (shared) / schemaRole (role) / title・description (name)
-# See: docs/jsonld.md (full: docs/jsonld_ja.md)
 title: Overview
-description: Dummy overview page (JSON-LD TechArticle sample)
+description: hermit-crumb architecture, ownership, and package boundaries
 schemaRole: TechArticle
 ---
 
 # Overview
 
-Dummy overview page.
+hermit-crumb is a documentation **shell**. Shell behavior (meta loading, peer module install, style injection, composable/utils auto-imports) lives in the package; presentation and documents live in your app.
 
-**Summary:** Set OSS info in `site.meta.yaml`, and `schemaRole: TechArticle` plus `title` / `description` here → `@graph` gets WebPage + TechArticle + SoftwareSourceCode.
+## Pieces
 
-Replace this body with your product introduction.
+| Piece | Role |
+| --- | --- |
+| Nuxt module `@b4moss/hermit-crumb` | Load `site.meta.yaml`, install Content / i18n / color-mode / scripts, inject Pico + tokens, auto-import runtime |
+| CLI `create` | Scaffold a full docs site |
+| CLI `add` | Add or restore UI components (`--force` to overwrite) |
+| Runtime | Nav, sidebar, JSON-LD, FAQ extraction, sitemap, and related helpers |
+
+## Ownership (important)
+
+| Stays with the package | Yours after create/add |
+| --- | --- |
+| Nuxt module, Pico + default tokens | `app/components/**` |
+| Auto-imported composables / utils | `content/**`, `app/config/docsNav.ts` |
+| `site.meta.yaml` shape / example | `site.meta.yaml` values, override CSS |
+
+Updating the package does not rewrite generated files. Use `npx @b4moss/hermit-crumb add <Name> --force` only when you want a template restored.
+
+## Requirements
+
+- Node.js `>= 24.20`
+- Nuxt `^4.5.2` (module compatibility `>=4.5.0`)
+- Peers: `@nuxt/content`, `@nuxtjs/i18n`, `@nuxtjs/color-mode`, `@nuxt/scripts` (installed when `installDeps: true`)
+
+See [Module](./module.md) for options and [Overrides](./customize.md) for replacement paths.

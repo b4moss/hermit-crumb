@@ -44,9 +44,12 @@ describe("createProject", () => {
       "content/ja/index.md",
       "content/en/faq.md",
       "app/config/docsNav.ts",
+      "app/layouts/docs.vue",
+      "app/layouts/default.vue",
       "app/components/SiteHeader.vue",
       "app/components/SiteFooter.vue",
       "app/components/DocsSidebar.vue",
+      "app/components/DocsToc.vue",
       "app/components/HeaderPrefsMenu.vue",
       "app/components/HeaderDropdown.vue",
       "app/components/DocsPager.vue",
@@ -57,6 +60,25 @@ describe("createProject", () => {
     ]) {
       await assert.doesNotReject(() => readFile(join(targetDir, rel), "utf8"));
     }
+
+    const docsLayout = await readFile(
+      join(targetDir, "app/layouts/docs.vue"),
+      "utf8",
+    );
+    assert.match(docsLayout, /DocsSidebar/);
+    assert.doesNotMatch(docsLayout, /DocsToc/);
+    const defaultLayout = await readFile(
+      join(targetDir, "app/layouts/default.vue"),
+      "utf8",
+    );
+    assert.doesNotMatch(defaultLayout, /DocsToc/);
+    assert.doesNotMatch(defaultLayout, /DocsSidebar/);
+    const slugPage = await readFile(
+      join(targetDir, "app/pages/[...slug].vue"),
+      "utf8",
+    );
+    assert.match(slugPage, /layout:\s*["']docs["']/);
+    assert.match(slugPage, /DocsToc/);
 
     const readme = await readFile(join(targetDir, "README.md"), "utf8");
     assert.match(readme, /acme-docs/);

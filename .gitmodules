@@ -1,0 +1,4 @@
+[submodule "charter"]
+	path = charter
+	url = https://github.com/b4moss/charter.git
+	branch = docs

@@ -1,20 +1,58 @@
 ---
 # @graph: WebPage + WebSite + TechArticle + SoftwareSourceCode
-# Write in: site.meta.yaml (shared) / schemaRole: TechArticle / title・description
-# See: docs/jsonld.md (full: docs/jsonld_ja.md)
-title: Install
-description: Dummy installation page (JSON-LD TechArticle sample)
+title: Setup
+description: create, add, and module-only installation paths
 schemaRole: TechArticle
 ---
 
-# Install
+# Setup
 
-Dummy installation page.
+Three install paths: `create` for a new site, `add` for components in an existing app, and module-only when you already have Nuxt.
 
-**How:** `schemaRole: TechArticle` + `title` / `description` (this file) and `software.*` in `site.meta.yaml`.
+## 1. `create` (recommended)
 
 ```bash
-npm install your-package
+npx @b4moss/hermit-crumb create my-docs
+cd my-docs
+cp site.meta.yaml.example site.meta.yaml
+npm install
+npm run dev
 ```
 
-Replace the steps with your product’s real install guide.
+| Flag | Effect |
+| --- | --- |
+| `--force` | Overwrite existing files |
+
+## 2. `add` (components)
+
+Run inside a Nuxt project (`nuxt.config.*` required):
+
+```bash
+npx @b4moss/hermit-crumb add --list
+npx @b4moss/hermit-crumb add DocsPager
+npx @b4moss/hermit-crumb add DocsPager --force
+```
+
+| Flag | Effect |
+| --- | --- |
+| `--list` | List template names and output paths |
+| `--force` | Overwrite an existing file |
+| `--cwd <dir>` | Project root (default: current directory) |
+
+Without `--force`, existing files are skipped. Templates are defined in the package `src/cli/templates.mjs`.
+
+## 3. Module-only
+
+```bash
+npm install @b4moss/hermit-crumb
+```
+
+```ts
+export default defineNuxtConfig({
+  modules: ["@b4moss/hermit-crumb"],
+})
+```
+
+Configure Content / i18n / color-mode / scripts in your own `nuxt.config.ts`. See the playground `nuxt.config.ts` for a working example.
+
+Next: [Module](./module.md) for options and the runtime surface.
