@@ -42,7 +42,7 @@ Requires **Node.js >= 22.19**.
 | --- | --- |
 | [`packages/hermit-crumb`](./packages/hermit-crumb) | Published package (module + CLI) |
 | [`playground`](./playground) | Demo site (create-equivalent; Netlify target) |
-| [`docs`](./docs/README.md) | Documentation index |
+| [`docs`](./docs/index.md) | Documentation index |
 
 ## Develop this monorepo
 
@@ -58,4 +58,4 @@ npm run dev:playground
 
 ## Docs
 
-See [`docs/README.md`](./docs/README.md) for usage, module API, theming, `site.meta.yaml`, publishing, and migration.
+See [`docs/index.md`](./docs/index.md) for usage, module API, theming, `site.meta.yaml`, publishing, and migration.
